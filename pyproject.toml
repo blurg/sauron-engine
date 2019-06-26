@@ -4,11 +4,14 @@ version = "0.1.4"
 description = "A simple rule engine implemented in python"
 authors = ["jlugao <joaolhullier@gmail.com>"]
 readme = "readme.md"
-website = "https://github.com/jlugao/sauron-rule-engine"
+repository = "https://github.com/jlugao/sauron-rule-engine"
+license = "MIT"
+
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = ">=3.6"
 pydantic = "^0.29.0"
+
 
 [tool.poetry.dev-dependencies]
 pytest = "^3.0"
