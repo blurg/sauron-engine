@@ -1,6 +1,7 @@
 <h1 align="center">Sauron Rule engine - One engine to rule them all </h1>
 <p>
   <img src="https://img.shields.io/badge/version-0.1-blue.svg?cacheSeconds=2592000" />
+  <img src="https://circleci.com/gh/jlugao/sauron-rule-engine/tree/master.svg?style=svg" />
 <img alt="GitHub" src="https://img.shields.io/github/license/jlugao/sauron-rule-engine.svg?style=plastic">
   <a href="https://twitter.com/joaovoce">
     <img alt="Twitter: joaovoce" src="https://img.shields.io/twitter/follow/joaovoce.svg?style=social" target="_blank" />
