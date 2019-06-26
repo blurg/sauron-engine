@@ -44,14 +44,21 @@ class RuleEngine:
         return decorator
 
     def parse_rule(self, rule: Union[dict, str]) -> RuleModel:
+        """
+        Rules are received either as json or as dict, parse and return pydantic model
+        """
         if type(rule) == str:
             rule: dict = json.loads(rule)
         return RuleModel(**rule)
 
-    def apply_conditions(self, conditions: List[ConditionModel]) -> bool:
+    def __apply_conditions(self, conditions: List[ConditionModel]) -> bool:
+        """
+            Auxiliary function to apply rules, currently the only option is to run
+            on AND mode, that means that any False condition will result in False
+
+        """
         should_continue: bool = True
         for condition in conditions:
-            print(f"Looking into condition {condition}")
             if condition.arguments:
                 should_continue &= self.conditions[condition.name](
                     **condition.arguments
@@ -61,9 +68,11 @@ class RuleEngine:
 
         return should_continue
 
-    def run_actions(self, actions: List[ConditionModel]) -> bool:
+    def __run_actions(self, actions: List[ConditionModel]) -> bool:
+        """
+            Actions are applied sequentially
+        """
         for action in actions:
-            print(f"Looking into action {action}")
             if action.arguments:
                 self.actions[action.name](**action.arguments)
             else:
@@ -71,11 +80,17 @@ class RuleEngine:
         return True
 
     def run(self, rule: Union[dict, str]) -> bool:
+        """
+            Run rule engine:
+            - rule - Json string or dict on the right format containing
+            a rule, it specifies which conditions should be checked and
+            which actions should be executed if conditions are met
+        """
         rule: RuleModel = self.parse_rule(rule)
-        should_continue: bool = self.apply_conditions(rule.conditions)
+        should_continue: bool = self.__apply_conditions(rule.conditions)
 
         if should_continue:
-            self.run_actions(rule.actions)
+            self.__run_actions(rule.actions)
             return True
         return False
 
