@@ -8,6 +8,8 @@
 
 > A simple rule engine to be used in python, it is based on simple rules and actions that can be chained with each other. The idea is to run the rule processor on events and have it mutate data or trigger actions
 
+Heavily inspired on FastAPI
+
 ## Install
 
 ```sh
@@ -19,39 +21,45 @@ pip install sauron-rule-engine
 A simple example of the usage
 
 ```python
-from sauron_rule_engine.rule_engine import GenericRuleProcessor
+from sauron_rule_engine.rule_engine import RuleEngine
 
-class CounterRuleProcessor(GenericRuleProcessor):
+#instantiate your engine
+engine = RuleEngine()
 
-    # CONDITIONS
-    @staticmethod
-    def counter_lt(value):
-        return counter < value
+#just a dumb variable so we can see the actions in use
+number_to_be_incremented = 1
 
-    # ACTIONS
-    @staticmethod
-    def increment_counter():
-        global counter
-        counter += 2
+@engine.condition
+def is_smaller_than(compared_to: int) -> bool:
+    return number_to_be_incremented < compared_to
 
+@engine.action
+def increment_number() -> None:
+    nonlocal number_to_be_incremented
+    number_to_be_incremented += 1
 
-counter = 0
-
-input_rule1 = {
-    "when": "event 1",
-    "condition": "counter_lt",
-    "value": 1,
-    "action": "increment_counter",
-}
-
+# Then just use your engine
 if __name__ == "__main__":
-    print(f"counter value: {counter}")
-    processor = CounterRuleProcessor()
-    processor.run(input_rule1)
-    print(f"counter value: {counter}")
-    processor.run(input_rule1)
-    print(f"counter value: {counter}")
+  print(number_to_be_incremented)
+  ## 1
+
+  engine.run(json_rule_can_increment)
+  print(number_to_be_incremented)
+  ## 2
+
+  engine.run(json_rule_can_increment)
+  print(number_to_be_incremented)
+  ## 2
+
 ```
+
+## Features coming to town
+
+- Exporting a json string with the conditions and actions in a given engine
+- Exported conditions and actions should include sane typing and docstring exposure
+- Support pydantic types
+- Support for choices fields with enum
+- Support for complex types with hints to the frontend (like a range for an int type
 
 ## Author
 
