@@ -23,6 +23,23 @@ A simple example of the usage
 ```python
 from sauron_rule_engine.rule_engine import RuleEngine
 
+json_rule = """
+    {
+        "conditions": [
+            {
+                "name": "is_smaller_than",
+                "arguments": {
+                    "compared_to": 2
+                }
+            }
+        ],
+        "actions": [
+            {
+                "name": "increment_number"
+            }
+        ]
+    }
+"""
 #instantiate your engine
 engine = RuleEngine()
 
@@ -43,11 +60,11 @@ if __name__ == "__main__":
   print(number_to_be_incremented)
   ## 1
 
-  engine.run(json_rule_can_increment)
+  engine.run(json_rule)
   print(number_to_be_incremented)
   ## 2
 
-  engine.run(json_rule_can_increment)
+  engine.run(json_rule)
   print(number_to_be_incremented)
   ## 2
 
