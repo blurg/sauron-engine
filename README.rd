@@ -1,10 +1,4 @@
-<h1 align="center">Sauron Rule engine - One engine to rule them all </h1>
-<p>
-  <img src="https://img.shields.io/badge/version-0.1-blue.svg?cacheSeconds=2592000" />
-  <a href="https://twitter.com/joaovoce">
-    <img alt="Twitter: joaovoce" src="https://img.shields.io/twitter/follow/joaovoce.svg?style=social" target="_blank" />
-  </a>
-</p>
+#Sauron Rule engine - One engine to rule them all
 
 > A simple rule engine to be used in python, it is based on simple rules and actions that can be chained with each other. The idea is to run the rule processor on events and have it mutate data or trigger actions
 
