@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   # Building and testing the project
   # Useful when a PR is open, for example
-  test:
+  build:
     # Our environment, Python 3.6.8
     docker:
       - image: circleci/python:3.7
