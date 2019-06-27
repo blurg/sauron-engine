@@ -14,11 +14,31 @@ pydantic = "^0.29.0"
 
 
 [tool.poetry.dev-dependencies]
+isort = "*"
 pytest = "^3.0"
 coverage = "4.5.3"
 coveralls = "^1.8"
 flake8 = "^3.7"
+black = {version = "^18.3-alpha.0",allows-prereleases = true}
+pre-commit = {version = "^1.17",allows-prereleases = true}
 
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
+
+[tool.black]
+line-length = 79
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+)/
+'''
