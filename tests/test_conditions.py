@@ -46,7 +46,6 @@ def test_doesnt_execute_on_condition_false(capsys):
             }
         ]
     }
-    
     """
 
     engine.run(rule)
@@ -70,7 +69,6 @@ def test_executes_on_condition_true(capsys):
             }
         ]
     }
-    
     """
 
     engine.run(rule)
@@ -94,7 +92,6 @@ def test_crashes_on_condition_crash(capsys):
             }
         ]
     }
-    
     """
     with pytest.raises(Exception):
         assert engine.run(rule)
