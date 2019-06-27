@@ -22,7 +22,6 @@ def json_rule_can_increment():
             }
         ]
     }
-    
     """
 
 
@@ -98,4 +97,3 @@ def test_can_run_rules_and_will_respect_them(json_rule_can_increment):
 
 def test_version():
     assert __version__ == "0.1.1"
-

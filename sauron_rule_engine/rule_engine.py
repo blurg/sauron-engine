@@ -93,4 +93,3 @@ class RuleEngine:
             self.__run_actions(rule.actions)
             return True
         return False
-
