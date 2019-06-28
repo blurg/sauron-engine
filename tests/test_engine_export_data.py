@@ -69,7 +69,7 @@ def test_can_generate_conditions_dictionary():
     assert type(conditions) == dict
 
 
-def test_can_generate_conditions_dictionary():
+def test_can_generate_conditions_dictionary_and_default_value_of_argument_lower_number_is_right():
     conditions = engine.export_conditions()
 
     assert (
