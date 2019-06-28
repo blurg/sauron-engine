@@ -1,13 +1,33 @@
-from typing import List, Dict, Callable, Union
+from typing import List, Dict, Callable, Union, Any, cast
 from .models import RuleModel, ConditionModel, ActionModel
 import json
+import inspect
 
 
 class RuleEngine:
     def __init__(self, *args, **kwargs):
         self.conditions: Dict[str, Callable] = {}
         self.actions: Dict[str, Callable] = {}
+        self.metadata: Dict[str, Callable] = {}
         return super().__init__(*args, **kwargs)
+
+    @staticmethod
+    def get_function_metadata(input_function: Callable) -> Dict[str, Any]:
+        signature: inspect.Signature = inspect.signature(input_function)
+        arguments_metadata: Dict[str, Dict[str, Any]] = {
+            key: {
+                "default": parameter.default,
+                "type": parameter.annotation.__name__,
+            }
+            for key, parameter in signature.parameters.items()
+        }
+
+        metadata = {
+            "args": arguments_metadata,
+            "doc": inspect.getdoc(input_function),
+        }
+
+        return metadata
 
     def __add_condition(self, function: Callable) -> None:
         self.conditions[function.__name__] = function
@@ -43,12 +63,18 @@ class RuleEngine:
         self.__add_action(function)
         return decorator
 
-    def parse_rule(self, rule: Union[dict, str]) -> RuleModel:
+    def parse_rule(
+        self, untreated_rule: Union[Dict[Any, Any], str]
+    ) -> RuleModel:
         """
         Rules are received either as json or as dict, parse and return pydantic model
         """
-        if type(rule) == str:
-            rule: dict = json.loads(rule)
+        rule: dict = {}
+        if type(untreated_rule) == str:
+            untreated_rule = cast(str, untreated_rule)
+            rule = json.loads(untreated_rule)
+        else:
+            rule = cast(dict, untreated_rule)
         return RuleModel(**rule)
 
     def __apply_conditions(self, conditions: List[ConditionModel]) -> bool:
@@ -68,7 +94,7 @@ class RuleEngine:
 
         return should_continue
 
-    def __run_actions(self, actions: List[ConditionModel]) -> bool:
+    def __run_actions(self, actions: List[ActionModel]) -> bool:
         """
             Actions are applied sequentially
         """
@@ -79,17 +105,24 @@ class RuleEngine:
                 self.actions[action.name]()
         return True
 
-    def run(self, rule: Union[dict, str]) -> bool:
+    def run(self, untreated_rule: Union[Dict[str, Any], str]) -> bool:
         """
             Run rule engine:
             - rule - Json string or dict on the right format containing
             a rule, it specifies which conditions should be checked and
             which actions should be executed if conditions are met
         """
-        rule: RuleModel = self.parse_rule(rule)
+        rule: RuleModel = self.parse_rule(untreated_rule)
         should_continue: bool = self.__apply_conditions(rule.conditions)
 
         if should_continue:
             self.__run_actions(rule.actions)
             return True
         return False
+
+    def export_conditions(self) -> Dict[str, Any]:
+        result = {}
+        for key, value in self.conditions.items():
+            result[key] = self.get_function_metadata(value)
+
+        return result
