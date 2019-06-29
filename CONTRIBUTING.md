@@ -16,7 +16,7 @@ Please note we have a code of conduct, please follow it in all your interactions
 
 if you need to add dependencies: `poetry add x` use `--dev` if you wish to add as a development dependency
 
-### How to make a clean pull request
+## How to make a clean pull request
 
 - Create a personal fork of the project on Github.
 - Clone the fork on your local machine. Your remote repo on Github is called `origin`.
@@ -34,13 +34,6 @@ if you need to add dependencies: `poetry add x` use `--dev` if you wish to add a
 - Once the pull request is approved and merged you can pull the changes from `upstream` to your local repo and delete your extra branch(es).
 
 And last but not least: Always write your commit messages in the present tense. Your commit message should describe what the commit, when applied, does to the code – not what you did to the code.
-
-## Pull Request Process
-
-1. Ensure any install, build or editor dependencies are removed before the end of the layer when doing a build.
-2. Update the README.md with details of changes to the interface.
-3. You may merge the Pull Request in once you have the sign-off of two other developers, or if you
-   do not have permission to do that, you may request the second reviewer to merge it for you.
 
 ## Code of Conduct
 
