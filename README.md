@@ -229,7 +229,7 @@ Results in the following json to be served to your frontend:
 
 ## Contribute
 
-- We need all the help we can get. Please read [CONTRIBUTE.md](CONTRIBUTE.md) for instructions
+- We need all the help we can get. Please read [CONTRIBUTE.md](CONTRIBUTING.md) for instructions
 
 ## Author
 
