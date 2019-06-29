@@ -2,7 +2,6 @@ from typing import List, Dict, Callable, Union, Any, cast
 from .models import RuleModel, ConditionModel, ActionModel
 import json
 import inspect
-import json as json_lib
 from enum import Enum
 
 
@@ -190,6 +189,6 @@ class RuleEngine:
             "conditions": self.export_conditions(),
         }
         if json:
-            return json_lib.dumps(metadata)
+            return json.dumps(metadata)
         else:
             return metadata
