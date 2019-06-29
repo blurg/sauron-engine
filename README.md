@@ -225,7 +225,11 @@ Results in the following json to be served to your frontend:
 ## More Features coming to town
 
 - Support pydantic types
-- Support for complex types with hints to the frontend (like a range for an int type
+- Support for complex types with hints to the frontend (like a range for an int type)
+
+## Contribute
+
+- We need all the help we can get. Please read [CONTRIBUTE.md](CONTRIBUTING.md) for instructions
 
 ## Author
 
