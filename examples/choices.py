@@ -2,6 +2,9 @@ from sauron_rule_engine.rule_engine import RuleEngine
 from enum import Enum
 
 
+engine = RuleEngine()
+
+
 class Color(str, Enum):
     red = "R"
     green = "G"
