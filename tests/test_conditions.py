@@ -5,27 +5,27 @@ from sauron_rule_engine.rule_engine import RuleEngine
 engine = RuleEngine()
 
 
-@engine.condition
+@engine.condition()
 def condition_true():
     return True
 
 
-@engine.condition
+@engine.condition()
 def second_condition_true():
     return True
 
 
-@engine.condition
+@engine.condition()
 def condition_false():
     return False
 
 
-@engine.condition
+@engine.condition()
 def condition_failure():
     raise Exception
 
 
-@engine.action
+@engine.action()
 def action_success():
     print("success")
 

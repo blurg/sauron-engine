@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sauron-rule-engine"
-version = "0.1.5"
+version = "0.1.6"
 description = "A simple rule engine implemented in python"
 authors = ["jlugao <joaolhullier@gmail.com>"]
 readme = "README.md"
@@ -24,6 +24,7 @@ black = {version = "^18.3-alpha.0",allows-prereleases = true}
 pre-commit = {version = "^1.17",allows-prereleases = true}
 pytest-cov = "^2.7"
 mypy = "^0.711.0"
+ipython = "^7.5"
 
 [tool.black]
 line-length = 79
