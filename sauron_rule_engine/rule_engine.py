@@ -133,9 +133,9 @@ class RuleEngine:
         """
         should_continue: bool = True
         for condition in conditions:
-            if condition.arguments:
+            if condition.args:
                 should_continue &= self.conditions[condition.name]["function"](
-                    **condition.arguments
+                    **condition.args
                 )
             else:
                 should_continue &= self.conditions[condition.name][
@@ -149,8 +149,8 @@ class RuleEngine:
             Actions are applied sequentially
         """
         for action in actions:
-            if action.arguments:
-                self.actions[action.name]["function"](**action.arguments)
+            if action.args:
+                self.actions[action.name]["function"](**action.args)
             else:
                 self.actions[action.name]["function"]()
         return True

@@ -36,7 +36,7 @@ def test_doesnt_execute_on_condition_false(capsys):
         "conditions": [
             {
                 "name": "condition_false",
-                "arguments": {
+                "args": {
                 }
             }
         ],
@@ -59,7 +59,7 @@ def test_executes_on_condition_true(capsys):
         "conditions": [
             {
                 "name": "condition_true",
-                "arguments": {
+                "args": {
                 }
             }
         ],
@@ -82,7 +82,7 @@ def test_crashes_on_condition_crash(capsys):
         "conditions": [
             {
                 "name": "condition_failure",
-                "arguments": {
+                "args": {
                 }
             }
         ],
