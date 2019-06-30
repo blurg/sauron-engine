@@ -11,7 +11,7 @@ def json_rule_can_increment():
         "conditions": [
             {
                 "name": "is_smaller_than",
-                "arguments": {
+                "args": {
                     "compared_to": 2
                 }
             }

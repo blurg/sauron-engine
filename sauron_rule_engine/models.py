@@ -4,12 +4,12 @@ from pydantic import BaseModel, Json
 
 class ConditionModel(BaseModel):
     name: str
-    arguments: Dict[str, Any] = None
+    args: Dict[str, Any] = None
 
 
 class ActionModel(BaseModel):
     name: str
-    arguments: Dict[str, Any] = None
+    args: Dict[str, Any] = None
 
 
 class RuleModel(BaseModel):
