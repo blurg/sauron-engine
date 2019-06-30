@@ -10,7 +10,7 @@ def json_data():
         "conditions": [
             {
                 "name": "condition_1",
-                "arguments": {
+                "args": {
                     "int1": 1,
                     "int2": 3
                 }
@@ -19,7 +19,7 @@ def json_data():
         "actions": [
             {
                 "name": "action_1",
-                "arguments": {
+                "args": {
                     "int_list": [1,2,3],
                     "my_string": "teste"
                 }
@@ -34,7 +34,7 @@ def test_can_deserialize_json_conditions(json_data):
     rule = RuleModel(**rule_dict)
     assert len(rule.conditions) == 1
     assert rule.conditions[0].name == "condition_1"
-    assert rule.conditions[0].arguments == {"int1": 1, "int2": 3}
+    assert rule.conditions[0].args == {"int1": 1, "int2": 3}
 
 
 def test_can_deserialize_json_actions(json_data):
@@ -42,7 +42,7 @@ def test_can_deserialize_json_actions(json_data):
     rule = RuleModel(**rule_dict)
     assert len(rule.actions) == 1
     assert rule.actions[0].name == "action_1"
-    assert rule.actions[0].arguments == {
+    assert rule.actions[0].args == {
         "int_list": [1, 2, 3],
         "my_string": "teste",
     }
