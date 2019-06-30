@@ -1,8 +1,7 @@
 from typing import List, Dict, Callable, Union, Any, cast
 from .models import RuleModel, ConditionModel, ActionModel
-import json
-import inspect
 import json as json_lib
+import inspect
 from enum import Enum
 
 
@@ -120,7 +119,7 @@ class RuleEngine:
         rule: dict = {}
         if type(untreated_rule) == str:
             untreated_rule = cast(str, untreated_rule)
-            rule = json.loads(untreated_rule)
+            rule = json_lib.loads(untreated_rule)
         else:
             rule = cast(dict, untreated_rule)
         return RuleModel(**rule)
