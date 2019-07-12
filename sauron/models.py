@@ -3,7 +3,7 @@ from pydantic import BaseModel, Json
 
 
 class JobModel(BaseModel):
-    job_type: str
+    job_type: str = "job"
     name: str
     args: Dict[str, Any] = None
 
