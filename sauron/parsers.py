@@ -1,12 +1,11 @@
 import json
 from json.decoder import JSONDecodeError
-
+from typing import List, Type
 from sauron.models import JobModel, JobsListModel
 
 
 class DefaultParser:
-    single_model = JobModel
-    list_model = JobsListModel
+    single_model: Type[JobModel] = JobModel
 
     def parse_single_job(self, job_dict):
         """
@@ -40,6 +39,7 @@ class DefaultParser:
         """
         Main method called to parse any jobs
         """
+        jobs_list_data: List[Type[JobModel]] = []
         if isinstance(jobs_input, str):
             jobs_list_data = self.parse_jobs_from_string(jobs_input)
         elif isinstance(jobs_input, list):
@@ -47,7 +47,7 @@ class DefaultParser:
             jobs_list_data = self.parse_jobs_from_list(jobs_input)
         else:
             raise ValueError("jobs param must be a list or json-string")
-        return self.list_model(jobs=jobs_list_data)
+        return jobs_list_data
 
 
 def dummy_test():
@@ -69,5 +69,6 @@ def dummy_test():
     p = DefaultParser()
     p.parse(jobs)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     dummy_test()

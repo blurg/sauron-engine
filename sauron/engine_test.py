@@ -1,5 +1,6 @@
 from sauron.engine import Engine
 from pprint import pprint
+
 engine = Engine()
 
 
@@ -41,7 +42,7 @@ def print_the_equation(session, lower_number=10, greater_number=20):
     print("#" * 40)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     jobs = """
         [
             {
@@ -56,13 +57,11 @@ if __name__ == '__main__':
             }
         ]
         """.strip()
-    session = {
-        "foo": "bar"
-    }
+    session = {"foo": "bar"}
     e = Engine()
     e.run(jobs, session)
     print("PARSED RULES:")
-    pprint([j for j in e.parsed_jobs.jobs])
+    pprint([j for j in e.parsed_rule])
     print("#" * 40)
     print("final SESSION content:")
     pprint(session)

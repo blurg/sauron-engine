@@ -1,4 +1,4 @@
-from typing import List, Dict, Callable, Union, Any, cast
+from typing import List, Dict, Callable, Union, Any, cast, Type
 from .models import JobModel
 import json as json
 import inspect
@@ -9,19 +9,27 @@ from .parsers import DefaultParser
 
 
 class Engine:
-    job_model_class = JobModel
 
-    parser_class = DefaultParser
-    parsed_jobs: List[JobModel] = []
+    job_model_class: Type[JobModel] = JobModel
+    parser_class: Type[DefaultParser] = DefaultParser
 
-    callables_collected = OrderedDict()
+    parsed_rule: List[Type[JobModel]] = []
 
-    def __init__(self, job_model=None, parser_class=None):
+    session: Dict[str, Any] = {}
+    callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
+
+    def __init__(
+        self,
+        context: Dict[str, Any] = None,
+        job_model: Type[JobModel] = None,
+        parser_class: Type[DefaultParser] = None,
+    ):
         """
-        Constructor that allows to customize:
-        - job model
-        - parser class: responsilbe to parse jobs
+        - Sessions can be initialized with a context provided by the user
+        - Job Model and Parser can be changed
         """
+        if context:
+            self.session = context
 
         if job_model:
             self.job_model_class = job_model
@@ -29,8 +37,7 @@ class Engine:
         if parser_class:
             self.parser_class = parser_class
 
-
-    def __add_callable(self, function, verbose_name):
+    def __add_callable(self, function: Callable, verbose_name: str):
         self.callables_collected[function.__name__] = {
             "function": function,
             "verbose_name": verbose_name,
@@ -44,8 +51,8 @@ class Engine:
             return None
         """
 
-        def decorator(function):
-            verbose_name = kwargs.get("verbose_name", None)
+        def decorator(function: Callable):
+            verbose_name: str = kwargs.get("verbose_name", None)
             if args:
                 verbose_name = args[0]
             self.__add_callable(function, verbose_name)
@@ -53,34 +60,55 @@ class Engine:
 
         return decorator
 
-    def apply_job_call(self, func_name, session):
-        target_func = self.callables_collected[func_name]["function"]
-        job_args = [
-            job.args for job in self.parsed_jobs.jobs if job.name == func_name
-        ]
-        if job_args:
-            job_args = job_args[0]
-        else:
-            raise ValueError(f'No job added with function name: {func_name}')
+    def before_job_call_hook(self):
+        ...
 
-        if job_args:
-            func_result = target_func(session=session, **job_args)
+    def after_job_call_hook(self):
+        ...
+
+    def apply_job_call(self, func_name: str, session: Dict[str, Any]):
+        target_func = self.callables_collected.get(func_name).get("function")
+        rules: List[Any] = []
+
+        for rule in self.parsed_rule:
+            if rule.name == func_name:
+                rules.append(rule)
+
+        if rules[0]:
+            job: Type[JobModel] = rules[0]
+        else:
+            raise ValueError(f"No job added with function name: {func_name}")
+
+        if job.args:
+            func_result = target_func(session=session, **job.args)
         else:
             func_result = target_func(session=session)
 
         # append result of function called into sessino
         session[func_name] = {"return": func_result}
 
-
-    def parse(self, unparsed_jobs):
+    def parse(self, unparsed_rule: Union[str, Dict[str, Any]]):
+        """
+            Parses rules
+        """
         p = self.parser_class()
-        parsed_jobs = p.parse(unparsed_jobs)
-        self.parsed_jobs = parsed_jobs
+        parsed_rule = p.parse(unparsed_rule)
+        print("parsed_rule")
+        self.parsed_rule = parsed_rule
+        return parsed_rule
 
-    def run(self, jobs, session):
+    def run(
+        self, rule: Union[str, Dict[str, Any]], session: Dict[str, Any] = None
+    ):
         """
-        Code that executes each Job respecting the jobs sequence
+        Executes each job passing the current session to them
         """
-        self.parse(jobs)
-        for job in self.parsed_jobs.jobs:
+
+        session = self.session
+
+        if session:
+            session = session
+
+        for job in self.parse(rule):
+            print(job)
             self.apply_job_call(job.name, session)
