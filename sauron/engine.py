@@ -104,10 +104,10 @@ class Engine:
         Executes each job passing the current session to them
         """
 
-        session = self.session
-
         if session:
             session = session
+        else:
+            session = self.session
 
         for job in self.parse(rule):
             print(job)
