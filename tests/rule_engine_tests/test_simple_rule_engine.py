@@ -1,7 +1,9 @@
+import inspect
+
+import pytest
+
 from sauron_rule_engine import __version__
 from sauron_rule_engine.rule_engine import RuleEngine
-import pytest
-import inspect
 
 
 @pytest.fixture

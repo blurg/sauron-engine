@@ -1,10 +1,7 @@
-from typing import List, Dict, Callable, Union, Any, cast, Type
-from .models import JobModel
-import json as json
-import inspect
 from collections import OrderedDict
-from enum import Enum
+from typing import List, Dict, Callable, Union, Any, Type
 
+from .models import JobModel
 from .parsers import DefaultParser
 
 
@@ -13,7 +10,7 @@ class Engine:
     job_model_class: Type[JobModel] = JobModel
     parser_class: Type[DefaultParser] = DefaultParser
 
-    parsed_rule: List[Type[JobModel]] = []
+    parsed_rule: List[JobModel] = []
 
     session: Dict[str, Any] = {}
     callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
@@ -29,13 +26,13 @@ class Engine:
         - Job Model and Parser can be changed
         """
         if context:
-            self.session = context
+            self.session: Dict[str, Any] = context
 
         if job_model:
-            self.job_model_class = job_model
+            self.job_model_class: Type[JobModel] = job_model
 
         if parser_class:
-            self.parser_class = parser_class
+            self.parser_class: Type[DefaultParser] = parser_class
 
     def __add_callable(self, function: Callable, verbose_name: str):
         self.callables_collected[function.__name__] = {
@@ -60,40 +57,27 @@ class Engine:
 
         return decorator
 
-    def before_job_call_hook(self):
-        ...
-
-    def after_job_call_hook(self):
-        ...
-
-    def apply_job_call(self, func_name: str, session: Dict[str, Any]):
-        target_func = self.callables_collected.get(func_name).get("function")
-        rules: List[Any] = []
-
-        for rule in self.parsed_rule:
-            if rule.name == func_name:
-                rules.append(rule)
-
-        if rules[0]:
-            job: Type[JobModel] = rules[0]
-        else:
-            raise ValueError(f"No job added with function name: {func_name}")
-
+    def apply_job_call(self, job: JobModel, session: Dict[str, Any]):
+        target_func: Callable = self.callables_collected.get(job.name).get(
+            "function"
+        )  # type: ignore
         if job.args:
-            func_result = target_func(session=session, **job.args)
+            result = target_func(session=session, **job.args)
         else:
-            func_result = target_func(session=session)
+            result = target_func(session=session)
 
-        # append result of function called into sessino
-        session[func_name] = {"return": func_result}
+        # append result of function called into session
+        results = session.get("results", None)
+        if not results:
+            session["results"] = []
+        session["results"].append({"return": result})
 
     def parse(self, unparsed_rule: Union[str, Dict[str, Any]]):
         """
             Parses rules
         """
-        p = self.parser_class()
-        parsed_rule = p.parse(unparsed_rule)
-        print("parsed_rule")
+        p: DefaultParser = self.parser_class()
+        parsed_rule: List[JobModel] = p.parse(unparsed_rule)
         self.parsed_rule = parsed_rule
         return parsed_rule
 
@@ -111,4 +95,4 @@ class Engine:
 
         for job in self.parse(rule):
             print(job)
-            self.apply_job_call(job.name, session)
+            self.apply_job_call(job, session)
