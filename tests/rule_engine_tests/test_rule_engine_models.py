@@ -1,6 +1,8 @@
-import pytest
-from sauron_rule_engine.models import ConditionModel, ActionModel, RuleModel
 import json
+
+import pytest
+
+from sauron_rule_engine.models import RuleModel
 
 
 @pytest.fixture

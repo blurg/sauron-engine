@@ -1,6 +1,6 @@
 import pytest
-from sauron_rule_engine.rule_engine import RuleEngine
 
+from sauron_rule_engine.rule_engine import RuleEngine
 
 engine = RuleEngine()
 

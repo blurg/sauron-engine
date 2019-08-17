@@ -1,24 +1,24 @@
 from typing import List, Dict, Any
-from pydantic import BaseModel, Json
+
+from pydantic import BaseModel
 
 
+# Generic Models
 class JobModel(BaseModel):
     job_type: str = "job"
     name: str
     args: Dict[str, Any] = None
 
 
-class JobsListModel(BaseModel):
-    jobs: List[JobModel]
+# Rule Engine Models
+class ConditionModel(JobModel):
+    job_type: str = "condition"
 
 
-# class ConditionModel(JobModel):
-#     job_type: str = "condition"
-#     name: str
-#     args: Dict[str, Any] = None
+class ActionModel(JobModel):
+    job_type: str = "action"
 
 
-# class ActionModel(JobModel):
-#     job_type: str = "action"
-#     name: str
-#     args: Dict[str, Any] = None
+class RuleModel(BaseModel):
+    conditions: List[ConditionModel]
+    actions: List[ActionModel]
