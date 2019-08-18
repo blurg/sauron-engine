@@ -57,20 +57,23 @@ class Engine:
 
         return decorator
 
-    def apply_job_call(self, job: JobModel, session: Dict[str, Any]):
+    def apply_job_call(
+        self, job: JobModel, session: Dict[str, Any]
+    ) -> Dict[str, Any]:
         target_func: Callable = self.callables_collected.get(job.name).get(
             "function"
-        )  # type: ignore
+        )
         if job.args:
             result = target_func(session=session, **job.args)
         else:
             result = target_func(session=session)
-
         # append result of function called into session
         results = session.get("results", None)
         if not results:
             session["results"] = []
-        session["results"].append({"return": result})
+        session["results"].append({"job": job.name, "return": result})
+        self.session = session
+        return session
 
     def parse(self, unparsed_rule: Union[str, Dict[str, Any]]):
         """
@@ -95,4 +98,5 @@ class Engine:
 
         for job in self.parse(rule):
             print(job)
-            self.apply_job_call(job, session)
+            print(session)
+            session = self.apply_job_call(job, session)
