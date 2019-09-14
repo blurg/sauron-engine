@@ -22,6 +22,10 @@ steps:
   displayName: 'Use Python $(python.version)'
 
 - script: |
-    pip install pytest pytest-azurepipelines
+    python -m pip install --upgrade pip
+    pip install pydantic pytest pytest-azurepipelines
+  displayName: 'Install dependencies'
+
+- script: |
     pytest
   displayName: 'pytest'
