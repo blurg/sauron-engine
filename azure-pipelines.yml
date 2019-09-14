@@ -33,12 +33,6 @@ steps:
     pytest
   displayName: 'pytest'
 
-- task:
-  inputs:
-    versionSpec: '3.6'
-  displayName: 'Linting'
-
 - script: |
-    python -m pip install --upgrade pip
-    pip install flake8
-  displayName: 'Flake 8'
+    flake8
+  displayName: 'Linting - flake8'
