@@ -9,7 +9,9 @@
     <img alt="Twitter: joaovoce" src="https://img.shields.io/twitter/follow/joaovoce.svg?style=social" target="_blank" />
   </a>
 </p>
+
 [![Build Status](https://dev.azure.com/jlugao/Sauron%20Engine/_apis/build/status/jlugao.sauron-rule-engine?branchName=master)](https://dev.azure.com/jlugao/Sauron%20Engine/_build/latest?definitionId=1&branchName=master)
+
 > A simple rule engine to be used in python, it is based on simple rules and actions that can be chained with each other. The idea is to run the rule processor on events and have it mutate data or trigger actions
 
 Heavily inspired on FastAPI. We use type annotations in our engine so that we can export data to other systems or frontends to convey what conditions and actions are possible using that engine
