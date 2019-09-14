@@ -6,6 +6,9 @@ from enum import Enum
 
 
 class RuleEngine:
+    class Meta:
+        job_types = ["Conditions", "Actions"]
+
     def __init__(self, *args, **kwargs):
         self.conditions: Dict[str, Callable] = {}
         self.actions: Dict[str, Callable] = {}

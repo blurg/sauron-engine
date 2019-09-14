@@ -79,8 +79,8 @@ class Engine:
         """
             Parses rules
         """
-        p: DefaultParser = self.parser_class()
-        parsed_rule: List[JobModel] = p.parse(unparsed_rule)
+        parser: DefaultParser = self.parser_class()
+        parsed_rule: List[JobModel] = parser.parse(unparsed_rule)
         self.parsed_rule = parsed_rule
         return parsed_rule
 

@@ -5,34 +5,22 @@ from pprint import pprint
 engine = Engine()
 
 
-@engine.job("First Condition")
-def first_condition(session, lower_number=0, greater_number=10):
+@engine.job("First Condition", type="condition")
+def first_condition(session, lower_number: int = 0, greater_number: int = 10):
     result = lower_number < greater_number
-    print("#" * 40)
-    print("Function called: first_condition")
-    print("Function ARGS: ")
-    print(f" - lower_number: {lower_number}")
-    print(f" - greater_number: {greater_number}")
-    print(f"Result EXPECTED: {result}")
-    print("#" * 40)
     return result
 
 
 @engine.job("Second Condition")
-def second_condition(session, lower_number=0, greater_number=10):
+def second_condition(session, lower_number: int = 0, greater_number: int = 10):
     result = lower_number
-    print("#" * 40)
-    print("Function called: second_condition")
-    print("Function ARGS: ")
-    print(f" - lower_number: {lower_number}")
-    print(f" - greater_number: {greater_number}")
-    print(f"Result EXPECTED: {result}")
-    print("#" * 40)
     return result
 
 
-@engine.job("The Action")
-def print_the_equation(session, lower_number=10, greater_number=20):
+@engine.job("The Action", type="action")
+def print_the_equation(
+    session, lower_number: int = 10, greater_number: int = 20
+):
     result = None
     print("#" * 40)
     print("Function called: print_the_equation")
