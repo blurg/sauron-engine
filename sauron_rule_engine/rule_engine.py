@@ -1,8 +1,11 @@
 from typing import List, Dict, Callable, Union, Any, cast
 from .models import RuleModel, ConditionModel, ActionModel
 import json as json_lib
+from ruamel.yaml import YAML
 import inspect
 from enum import Enum
+
+yaml = YAML(typ="safe")
 
 
 class RuleEngine:
@@ -122,7 +125,7 @@ class RuleEngine:
         rule: dict = {}
         if type(untreated_rule) == str:
             untreated_rule = cast(str, untreated_rule)
-            rule = json_lib.loads(untreated_rule)
+            rule = yaml.load(untreated_rule)
         else:
             rule = cast(dict, untreated_rule)
         return RuleModel(**rule)
