@@ -1,8 +1,10 @@
 import json
 from json.decoder import JSONDecodeError
 from typing import List, Type, Union, Dict, Any
-
 from sauron.models import JobModel
+from ruamel.yaml import YAML
+
+yaml = YAML(typ="safe")
 
 
 class DefaultParser:
@@ -30,7 +32,7 @@ class DefaultParser:
         json-string with the list of jobs
         """
         try:
-            jobs_list: dict = json.loads(jobs_input)
+            jobs_list: dict = yaml.load(jobs_input)
         except JSONDecodeError:
             raise ValueError("jobs param is not a valid json string")
         else:
@@ -51,24 +53,8 @@ class DefaultParser:
         return jobs_list_data
 
 
-class RuleEngineParser:
+class RuleEngineParser(DefaultParser):
     single_model: Type[JobModel] = JobModel
-
-    def __parse_single_job(self, job_dict) -> JobModel:
-        """
-        Method that know how to parse a single job dictionary
-        """
-        return self.single_model(**job_dict)
-
-    def __parse_jobs_from_list(self, jobs_input: List[str]) -> List[JobModel]:
-        """
-        Method that know how to parse a list for jobs
-        """
-        parsed_jobs: List = []
-        for raw_job in jobs_input:
-            current_job: JobModel = self.__parse_single_job(raw_job)
-            parsed_jobs.append(current_job)
-        return parsed_jobs
 
     def __parse_jobs_from_string(self, jobs_input: str) -> List[JobModel]:
         """

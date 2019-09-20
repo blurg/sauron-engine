@@ -37,7 +37,10 @@ class TestDefaultExporter:
         exporter = DefaultExporter()
         self.exported_jobs = exporter.export_jobs(engine.callables_collected)
         self.exported_jobs_as_json = exporter.export_jobs(
-            engine.callables_collected, json=True
+            engine.callables_collected, fmt="json"
+        )
+        self.exported_jobs_as_yaml = exporter.export_jobs(
+            engine.callables_collected, fmt="yaml"
         )
 
     def test_can_export_simple_engine(self):
@@ -45,6 +48,9 @@ class TestDefaultExporter:
 
     def test_can_export_simple_engine_as_json(self):
         assert type(self.exported_jobs_as_json) is str
+
+    def test_can_export_simple_engine_as_yaml(self):
+        assert type(self.exported_jobs_as_yaml) is str
 
     def test_exported_data_has_three_jobs(self):
         assert len(self.exported_jobs) == 3

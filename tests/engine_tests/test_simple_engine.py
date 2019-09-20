@@ -75,3 +75,12 @@ class TestFirstEngineCases:
             "job": "first_condition",
             "return": True,
         }
+
+    def test_export_metadata_as_dict(self):
+        engine = self.setup()
+        metadata = engine.export_metadata()
+        assert "print_the_equation" in metadata.keys()
+        assert "first_condition" in metadata.keys()
+        assert "second_condition" in metadata.keys()
+        assert "lower_number" in metadata["second_condition"]["args"].keys()
+        assert "greater_number" in metadata["second_condition"]["args"].keys()

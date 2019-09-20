@@ -1,14 +1,15 @@
 from collections import OrderedDict
 from typing import List, Dict, Callable, Union, Any, Type
-
 from .models import JobModel
 from .parsers import DefaultParser
+from .exporters import DefaultExporter
 
 
 class Engine:
 
     job_model_class: Type[JobModel] = JobModel
     parser_class: Type[DefaultParser] = DefaultParser
+    exporter_class: Type[DefaultExporter] = DefaultExporter
 
     parsed_rule: List[JobModel] = []
 
@@ -100,3 +101,7 @@ class Engine:
             print(job)
             print(session)
             session = self.apply_job_call(job, session)
+
+    def export_metadata(self, fmt: str = "dict"):
+        exporter = DefaultExporter()
+        return exporter.export_jobs(self.callables_collected, fmt=fmt)

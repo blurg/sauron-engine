@@ -4,6 +4,30 @@ from .models import JobModel
 from enum import Enum
 import inspect
 import json as json_lib
+from ruamel.yaml import YAML
+from ruamel.yaml.compat import StringIO
+
+
+class MyYAML(YAML):
+    """
+        ruamel.yaml lib was chosen as it supports yaml1.2, this gives us json parsing
+        together with yaml parsing
+        Allows to dump yaml to a string. This can/should be reviewed as this is less
+        performatic than writing to a file or stdout according to docs
+        https://yaml.readthedocs.io/en/latest/example.html#output-of-dump-as-a-string
+    """
+
+    def dump(self, data, stream=None, **kw):
+        inefficient = False
+        if stream is None:
+            inefficient = True
+            stream = StringIO()
+        YAML.dump(self, data, stream, **kw)
+        if inefficient:
+            return stream.getvalue()
+
+
+yaml = MyYAML(typ="safe")
 
 
 class DefaultExporter:
@@ -67,10 +91,12 @@ class DefaultExporter:
         return result
 
     def export_jobs(
-        self, data: Dict[str, Callable], json: bool = False
+        self, data: Dict[str, Callable], fmt: str = "dict"
     ) -> Union[str, Dict[str, Any]]:
         jobs = self.export_job(data)
-        if json:
+        if fmt == "json":
             return json_lib.dumps(jobs)
+        elif fmt == "yaml":
+            return yaml.dump(jobs)
         else:
             return jobs
