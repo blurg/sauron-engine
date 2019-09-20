@@ -27,10 +27,10 @@ class MyYAML(YAML):
             return stream.getvalue()
 
 
-yaml = MyYAML(typ="safe")
-
-
 class DefaultExporter:
+    def __init__(self):
+        self.yaml: Type[YAML] = MyYAML(typ="safe")
+
     def get_job_types(self):
         # TODO: implement this method to get the job types available
         ...
@@ -97,6 +97,6 @@ class DefaultExporter:
         if fmt == "json":
             return json_lib.dumps(jobs)
         elif fmt == "yaml":
-            return yaml.dump(jobs)
+            return self.yaml.dump(jobs)
         else:
             return jobs

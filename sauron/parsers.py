@@ -4,11 +4,12 @@ from typing import List, Type, Union, Dict, Any
 from sauron.models import JobModel
 from ruamel.yaml import YAML
 
-yaml = YAML(typ="safe")
-
 
 class DefaultParser:
     single_model: Type[JobModel] = JobModel
+
+    def __init__(self):
+        self.yaml = YAML(typ="safe")
 
     def __parse_single_job(self, job_dict) -> JobModel:
         """
@@ -32,7 +33,7 @@ class DefaultParser:
         json-string with the list of jobs
         """
         try:
-            jobs_list: dict = yaml.load(jobs_input)
+            jobs_list: dict = self.yaml.load(jobs_input)
         except JSONDecodeError:
             raise ValueError("jobs param is not a valid json string")
         else:

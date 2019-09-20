@@ -21,19 +21,23 @@ class Engine:
         context: Dict[str, Any] = None,
         job_model: Type[JobModel] = None,
         parser_class: Type[DefaultParser] = None,
+        exporter_class: Type[DefaultExporter] = None,
     ):
         """
         - Sessions can be initialized with a context provided by the user
         - Job Model and Parser can be changed
         """
         if context:
-            self.session: Dict[str, Any] = context
+            self.session = context
 
         if job_model:
-            self.job_model_class: Type[JobModel] = job_model
+            self.job_model_class = job_model
 
         if parser_class:
-            self.parser_class: Type[DefaultParser] = parser_class
+            self.parser_class = parser_class
+
+        if exporter_class:
+            self.exporter_class = exporter_class
 
     def __add_callable(self, function: Callable, verbose_name: str):
         self.callables_collected[function.__name__] = {
@@ -92,16 +96,12 @@ class Engine:
         Executes each job passing the current session to them
         """
 
-        if session:
-            session = session
-        else:
+        if not session:
             session = self.session
 
         for job in self.parse(rule):
-            print(job)
-            print(session)
             session = self.apply_job_call(job, session)
 
     def export_metadata(self, fmt: str = "dict"):
-        exporter = DefaultExporter()
+        exporter = self.exporter_class()
         return exporter.export_jobs(self.callables_collected, fmt=fmt)
