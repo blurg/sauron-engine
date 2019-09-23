@@ -142,3 +142,5 @@ dmypy.json
 .idea
 
 # End of https://www.gitignore.io/api/python,visualstudiocode
+
+todo.md

@@ -50,7 +50,6 @@ class TestFirstEngineCases:
 
     def setup(self):
         session = {"foo": "bar"}
-        engine = Engine()
         engine.run(self.test_string, session)
         return engine
 

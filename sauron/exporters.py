@@ -52,7 +52,7 @@ class DefaultExporter:
         return name, choices, defaults
 
     @classmethod
-    def __get_function_metadata(
+    def _get_function_metadata(
         cls, input_function: Callable
     ) -> Dict[str, Any]:
         """
@@ -77,10 +77,11 @@ class DefaultExporter:
         return metadata
 
     def get_metadata(self, input_function: Dict[str, Any]) -> Dict[str, Any]:
-        metadata = self.__get_function_metadata(input_function["function"])
+        metadata = self._get_function_metadata(input_function["function"])
         verbose_name = input_function.get("verbose_name", None)
         if verbose_name:
             metadata["name"] = verbose_name
+        metadata["type"] = input_function.get("type", "job")
 
         return metadata
 
@@ -89,6 +90,33 @@ class DefaultExporter:
         for name, item in jobs.items():
             result[name] = self.get_metadata(item)
         return result
+
+    def export_jobs(
+        self, data: Dict[str, Callable], fmt: str = "dict"
+    ) -> Union[str, Dict[str, Any]]:
+        jobs = self.export_job(data)
+        if fmt == "json":
+            return json_lib.dumps(jobs)
+        elif fmt == "yaml":
+            return self.yaml.dump(jobs)
+        else:
+            return jobs
+
+
+class RuleEngineExporter(DefaultExporter):
+    def __init__(self):
+        self.yaml: Type[YAML] = MyYAML(typ="safe")
+
+    def export_job(self, jobs: Dict[str, Any]) -> Dict[str, Any]:
+        result = super().export_job(jobs)
+        # Separar jobs por tipo
+        result_splited_by_type = {}
+        for key,value in result.items():
+            current_type = result_splited_by_type.get(value["type"], {})
+            current_type[key] = value
+            result_splited_by_type[value["type"]] = current_type
+        print(result_splited_by_type)
+        return result_splited_by_type
 
     def export_jobs(
         self, data: Dict[str, Callable], fmt: str = "dict"

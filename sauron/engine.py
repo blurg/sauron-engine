@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from typing import List, Dict, Callable, Union, Any, Type
+from typing import List, Dict, Callable, Union, Any, Type, Tuple
 from .models import JobModel
 from .parsers import DefaultParser
 from .exporters import DefaultExporter
@@ -14,7 +14,6 @@ class Engine:
     parsed_rule: List[JobModel] = []
 
     session: Dict[str, Any] = {}
-    callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 
     def __init__(
         self,
@@ -38,11 +37,13 @@ class Engine:
 
         if exporter_class:
             self.exporter_class = exporter_class
+        self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 
-    def __add_callable(self, function: Callable, verbose_name: str):
+    def _add_callable(self, function: Callable, verbose_name: str, job_type: str = "job"):
         self.callables_collected[function.__name__] = {
             "function": function,
             "verbose_name": verbose_name,
+            "type": job_type
         }
 
     def job(self, *args, **kwargs):
@@ -57,14 +58,14 @@ class Engine:
             verbose_name: str = kwargs.get("verbose_name", None)
             if args:
                 verbose_name = args[0]
-            self.__add_callable(function, verbose_name)
+            self._add_callable(function, verbose_name)
             return function
 
         return decorator
 
     def apply_job_call(
         self, job: JobModel, session: Dict[str, Any]
-    ) -> Dict[str, Any]:
+    ) -> Tuple[Dict[str, Any], Any]:
         target_func: Callable = self.callables_collected.get(job.name).get(
             "function"
         )
@@ -78,7 +79,7 @@ class Engine:
             session["results"] = []
         session["results"].append({"job": job.name, "return": result})
         self.session = session
-        return session
+        return (session, result)
 
     def parse(self, unparsed_rule: Union[str, Dict[str, Any]]):
         """
@@ -100,7 +101,9 @@ class Engine:
             session = self.session
 
         for job in self.parse(rule):
-            session = self.apply_job_call(job, session)
+            session, result = self.apply_job_call(job, session)
+            if not result:
+                break
 
     def export_metadata(self, fmt: str = "dict"):
         exporter = self.exporter_class()

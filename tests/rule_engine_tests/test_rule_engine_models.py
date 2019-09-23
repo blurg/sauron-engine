@@ -2,7 +2,7 @@ import json
 
 import pytest
 
-from sauron_rule_engine.models import RuleModel
+from sauron.models import RuleModel
 
 
 @pytest.fixture

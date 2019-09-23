@@ -26,6 +26,8 @@ pre-commit = {version = "^1.17",allows-prereleases = true}
 pytest-cov = "^2.7"
 mypy = "^0.711.0"
 ipython = "^7.5"
+pylint = "^2.3"
+rope = "^0.14.0"
 
 [tool.black]
 line-length = 79

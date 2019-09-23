@@ -1,7 +1,6 @@
 from sauron.exporters import DefaultExporter
 import pytest
 from sauron.engine import Engine
-from pprint import pprint
 
 engine = Engine()
 
@@ -35,6 +34,7 @@ def print_the_equation(
 class TestDefaultExporter:
     def setup(self):
         exporter = DefaultExporter()
+        print(engine.callables_collected)
         self.exported_jobs = exporter.export_jobs(engine.callables_collected)
         self.exported_jobs_as_json = exporter.export_jobs(
             engine.callables_collected, fmt="json"

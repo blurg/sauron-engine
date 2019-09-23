@@ -1,6 +1,6 @@
 from enum import Enum
 
-from sauron_rule_engine.rule_engine import RuleEngine
+from sauron.rule_engine import RuleEngine
 
 engine = RuleEngine()
 
@@ -67,104 +67,15 @@ def obvious_action(lower_number: int = 10, greater_number: int = 20) -> None:
     print(f"{lower_number} < {greater_number}")
 
 
-# CONDITIONS
-
-
-def test_get_funtion_metadata_docstring():
-    conditions = engine.export_conditions()
-    assert (
-        conditions["first_condition"]["doc"]
-        == "Checks if first number is lower than the first\n- lower_number: Number expected to be low\n- higher_number: Number expected to be high"
-    )
-
-
-def test_get_funtion_metadata_can_get_first_arg_type():
-    conditions = engine.export_conditions()
-
-    assert (
-        conditions["first_condition"]["args"]["lower_number"]["type"] == "int"
-    )
-
-
-def test_can_generate_conditions_dictionary_and_default_value_of_argument_lower_number_is_right():
-    conditions = engine.export_conditions()
-
-    assert (
-        conditions["first_condition"]["args"]["lower_number"]["default"] == 10
-    )
-
-
-def test_can_generate_conditions_dictionary_and_verbose_name():
-    conditions = engine.export_conditions()
-
-    assert conditions["first_condition"]["name"] == "Primeira Condição"
-
-
-def test_can_generate_conditions_dictionary_and_function_name():
-    conditions = engine.export_conditions()
-
-    assert (
-        conditions["second_condition_true"]["name"] == "second_condition_true"
-    )
-
-
-# ACTIONS
-
-
-def test_can_generate_actions_dictionary_and_function_name_with_verbose_name():
-    actions = engine.export_actions()
-    print(actions)
-
-    assert actions["obvious_action"]["name"] == "Ação Óbvia"
-
-
-def test_can_generate_actions_dictionary_and_function_name():
-    actions = engine.export_actions()
-    print(actions)
-
-    assert actions["action_success"]["name"] == "action_success"
-
-
-def test_get_action_metadata_docstring():
-    actions = engine.export_actions()
-    assert (
-        actions["obvious_action"]["doc"]
-        == "Prints a statement Asserting that the first number is lower than the second number\n- lower_number: Number expected to be low\n- higher_number: Number expected to be high"
-    )
-
-
-def test_get_action_metadata_can_get_first_arg_type():
-    actions = engine.export_actions()
-
-    assert actions["obvious_action"]["args"]["lower_number"]["type"] == "int"
-
-
-def test_can_generate_actions_dictionary_and_default_value_of_argument_lower_number_is_right():
-    actions = engine.export_actions()
-
-    assert actions["obvious_action"]["args"]["lower_number"]["default"] == 10
-
-
-def test_can_generate_metadata_dictionary_and_default_value_of_argument_lower_number_is_right_for_action():
-    metadata = engine.export_metadata()
-
-    assert (
-        metadata["actions"]["obvious_action"]["args"]["lower_number"][
-            "default"
-        ]
-        == 10
-    )
-
-
 def test_can_generate_metadata_json_and_default_value_of_argument_lower_number_is_right_for_action():
-    metadata = engine.export_metadata(json=True)
-
+    metadata = engine.export_metadata(fmt="json")
     assert type(metadata) == str
 
 
 def test_can_handle_enum_types_on_condition():
-    conditions = engine.export_conditions()
-    assert conditions["is_red"]["args"]["color"]["choices"] == [
+    jobs = engine.export_metadata()
+    print(jobs["condition"])
+    assert jobs["condition"]["is_red"]["args"]["color"]["choices"] == [
         "red",
         "green",
         "blue",
