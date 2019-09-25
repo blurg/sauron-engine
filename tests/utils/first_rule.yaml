@@ -1,0 +1,10 @@
+- name: first_condition
+  args:
+    lower_number: 3
+    greater_number: 10
+  job_type: condition
+- name: print_the_equation
+  args:
+    lower_number: 3
+    greater_number: 10
+  job_type: action

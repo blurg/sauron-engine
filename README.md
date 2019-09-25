@@ -44,13 +44,13 @@ A Rule is a dict or json string containing the conditions and actions and the ar
 A simple example of the usage
 
 ```python
-from sauron_rule_engine.rule_engine import RuleEngine
+from sauron.rule_engine import RuleEngine
 
 engine = RuleEngine()
 
 
 @engine.condition("First Condition")
-def first_condition(lower_number: int = 10, greater_number: int = 20) -> bool:
+def first_condition(session,lower_number: int = 10, greater_number: int = 20) -> bool:
     """
     Checks if first number is lower than the first
     - lower_number: Number expected to be low
@@ -60,7 +60,7 @@ def first_condition(lower_number: int = 10, greater_number: int = 20) -> bool:
 
 
 @engine.condition()
-def second_condition():
+def second_condition(session):
     """
     Takes no argument and always returns True
     """
@@ -69,7 +69,7 @@ def second_condition():
 
 @engine.action("The Action")
 def print_the_equation(
-    lower_number: int = 10, greater_number: int = 20
+    session, lower_number: int = 10, greater_number: int = 20
 ) -> None:
     """
     Prints a statement Asserting that the first number is lower than the second number
@@ -103,7 +103,7 @@ engine.run(rule)
 Choices fields are supported through python's built-in Enum type. Example:
 
 ```python
-from sauron_rule_engine.rule_engine import RuleEngine
+from sauron.rule_engine import RuleEngine
 from enum import Enum
 
 class Color(str, Enum):
@@ -113,7 +113,7 @@ class Color(str, Enum):
 
 
 @engine.condition("is it red?")
-def is_red(color: Color) -> bool:
+def is_red(session, color: Color) -> bool:
     """
     Checks if the color is red
     """
@@ -223,6 +223,11 @@ Results in the following json to be served to your frontend:
   }
 }
 ```
+
+## Sessions
+
+Results are stored in a result stack inside the session, so that jobs can share data with each other. 
+
 
 ## More Features coming to town
 

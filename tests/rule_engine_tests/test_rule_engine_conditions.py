@@ -1,32 +1,32 @@
 import pytest
-from sauron_rule_engine.rule_engine import RuleEngine
 
+from sauron.rule_engine import RuleEngine
 
 engine = RuleEngine()
 
 
 @engine.condition()
-def condition_true():
+def condition_true(session):
     return True
 
 
 @engine.condition()
-def second_condition_true():
+def second_condition_true(session):
     return True
 
 
 @engine.condition()
-def condition_false():
+def condition_false(session):
     return False
 
 
 @engine.condition()
-def condition_failure():
+def condition_failure(session):
     raise Exception
 
 
 @engine.action()
-def action_success():
+def action_success(session):
     print("success")
 
 
