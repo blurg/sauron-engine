@@ -32,3 +32,7 @@ steps:
 - script: |
     pytest
   displayName: 'pytest'
+
+- script: |
+    flake8
+  displayName: 'Linting - flake8'
