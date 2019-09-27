@@ -41,7 +41,7 @@ class TestCaseOne:
         assert result[1].job_type == "action"
 
     def setup_yaml(self):
-        with open("tests/utils/first_rule.yaml","r") as f:
+        with open("tests/utils/first_rule.yaml", "r") as f:
             test_string = f.read().strip()
         p = DefaultParser()
         result = p.parse(test_string)
