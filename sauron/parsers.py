@@ -56,8 +56,10 @@ class DefaultParser:
 
 class RuleEngineParser(DefaultParser):
     single_model: Type[JobModel] = JobModel
+
     def __init__(self):
         self.yaml = YAML(typ="safe")
+
     def _parse_jobs_from_string(self, jobs_input: str) -> List[JobModel]:
         """
         Method that know how to parse a list for jobs described by a

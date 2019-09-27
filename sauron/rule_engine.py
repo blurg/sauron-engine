@@ -3,11 +3,12 @@ from typing import Callable, Type
 from .parsers import DefaultParser, RuleEngineParser
 from .exporters import DefaultExporter, RuleEngineExporter
 
+
 class RuleEngine(Engine):
 
     parser_class: Type[DefaultParser] = RuleEngineParser
     exporter_class: Type[DefaultExporter] = RuleEngineExporter
-    
+
     def condition(self, *args, **kwargs):
         """
         Decorator so jobs can be called as follows:
@@ -24,7 +25,7 @@ class RuleEngine(Engine):
             return function
 
         return decorator
-    
+
     def action(self, *args, **kwargs):
         """
         Decorator so jobs can be called as follows:

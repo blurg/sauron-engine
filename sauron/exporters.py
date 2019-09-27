@@ -111,7 +111,7 @@ class RuleEngineExporter(DefaultExporter):
         result = super().export_job(jobs)
         # Separar jobs por tipo
         result_splited_by_type = {}
-        for key,value in result.items():
+        for key, value in result.items():
             current_type = result_splited_by_type.get(value["type"], {})
             current_type[key] = value
             result_splited_by_type[value["type"]] = current_type
