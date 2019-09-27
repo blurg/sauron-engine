@@ -38,7 +38,7 @@ def second_action():
     return True
 
 
-class TestYamlExporter:
+class TestExportYaml:
     def setup(self):
         self.export_yaml = engine.export_metadata(fmt="yaml")
         self.export = engine.export_metadata()

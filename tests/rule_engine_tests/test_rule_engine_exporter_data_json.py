@@ -37,7 +37,7 @@ def second_action():
     return True
 
 
-class TestJsonExporter:
+class TestExportJson:
     def setup(self):
         self.export_json = engine.export_metadata(fmt="json")
         self.export = engine.export_metadata()
