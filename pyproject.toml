@@ -1,11 +1,12 @@
 [tool.poetry]
 name = "sauron-rule-engine"
-version = "0.1.8"
+version = "0.1.9"
 description = "A simple rule engine implemented in python"
 authors = ["jlugao <joaolhullier@gmail.com>"]
 readme = "README.md"
 repository = "https://github.com/jlugao/sauron-rule-engine"
 license = "MIT"
+include = ["sauron"]
 
 
 [tool.poetry.dependencies]
