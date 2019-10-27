@@ -1,10 +1,12 @@
-from sauron_rule_engine.rule_engine import RuleEngine
+from sauron.rule_engine import RuleEngine
 
 engine = RuleEngine()
 
 
 @engine.condition("First Condition")
-def first_condition(lower_number: int = 10, greater_number: int = 20) -> bool:
+def first_condition(
+    session, lower_number: int = 10, greater_number: int = 20
+) -> bool:
     """
     Checks if first number is lower than the first
     - lower_number: Number expected to be low
@@ -14,7 +16,7 @@ def first_condition(lower_number: int = 10, greater_number: int = 20) -> bool:
 
 
 @engine.condition()
-def second_condition():
+def second_condition(session):
     """
     Takes no argument and always returns True
     """
@@ -23,7 +25,7 @@ def second_condition():
 
 @engine.action("The Action")
 def print_the_equation(
-    lower_number: int = 10, greater_number: int = 20
+    session, lower_number: int = 10, greater_number: int = 20
 ) -> None:
     """
     Prints a statement Asserting that the first number is lower than the second number
