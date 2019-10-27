@@ -83,6 +83,9 @@ class RuleEngineParser(DefaultParser):
         elif isinstance(jobs_input, list):
             # jobs_input is a python list
             jobs_list_data = self._parse_jobs_from_list(jobs_input)
+        elif isinstance(jobs_input, dict):
+            # jobs_input is a python list
+            jobs_list_data = self._parse_jobs_from_string(str(jobs_input))
         else:
             raise ValueError("jobs param must be a list or json-string")
         return jobs_list_data

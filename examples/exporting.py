@@ -1,4 +1,4 @@
-from sauron_rule_engine.rule_engine import RuleEngine
+from sauron.rule_engine import RuleEngine
 from enum import Enum
 
 engine = RuleEngine()
@@ -48,5 +48,5 @@ def is_red(color: Color) -> bool:
     return color == color.red
 
 
-metadata = engine.export_metadata(json=True)
+metadata = engine.export_metadata(fmt="json")
 print(metadata)
