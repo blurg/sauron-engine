@@ -17,6 +17,7 @@ python = "^3.6"
 pydantic = "^0.29.0"
 mypy = "^0.711.0"
 "ruamel.yaml" = "^0.16.5"
+blinker = "^1.4"
 
 
 [tool.poetry.dev-dependencies]
