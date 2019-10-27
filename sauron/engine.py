@@ -67,19 +67,28 @@ class Engine:
 
         return decorator
 
-    def import_jobs(self, JobModule: ModuleType):
-        try:
-            raw_job_list: List[
-                Tuple[str, Dict[str, Any]]
-            ] = JobModule.jobs_list
-        except AttributeError:
-            pre_raw_job_list: List[Tuple[str, Callable]] = inspect.getmembers(
-                JobModule, predicate=inspect.isfunction
-            )
-            raw_job_list: List[Tuple[str, Dict[str, Any]]] = [
-                (job[0], {"callable": job[1], "verbose_name": job[0]})
-                for job in pre_raw_job_list
-            ]
+    def import_jobs(
+        self,
+        job_module: ModuleType,
+        job_metadata: List[Tuple[str, Dict[str, Any]]] = None,
+    ):
+        if job_metadata is not None:
+            raw_job_list: job_metadata
+        else:
+            try:
+                raw_job_list: List[
+                    Tuple[str, Dict[str, Any]]
+                ] = job_module.jobs_list
+            except AttributeError:
+                pre_raw_job_list: List[
+                    Tuple[str, Callable]
+                ] = inspect.getmembers(
+                    job_module, predicate=inspect.isfunction
+                )
+                raw_job_list: List[Tuple[str, Dict[str, Any]]] = [
+                    (job[0], {"callable": job[1], "verbose_name": job[0]})
+                    for job in pre_raw_job_list
+                ]
         for job in raw_job_list:
             self._add_callable(
                 job[1].get("callable"),
