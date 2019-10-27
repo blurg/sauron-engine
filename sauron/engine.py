@@ -3,6 +3,7 @@ from typing import List, Dict, Callable, Union, Any, Type, Tuple
 from .models import JobModel
 from .parsers import DefaultParser
 from .exporters import DefaultExporter
+import inspect
 
 
 class Engine:
@@ -39,11 +40,13 @@ class Engine:
             self.exporter_class = exporter_class
         self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 
-    def _add_callable(self, function: Callable, verbose_name: str, job_type: str = "job"):
+    def _add_callable(
+        self, function: Callable, verbose_name: str, job_type: str = "job"
+    ):
         self.callables_collected[function.__name__] = {
             "function": function,
             "verbose_name": verbose_name,
-            "type": job_type
+            "type": job_type,
         }
 
     def job(self, *args, **kwargs):
@@ -62,6 +65,12 @@ class Engine:
             return function
 
         return decorator
+
+    def import_jobs(self, JobClass: object):
+        raw_job_list: List[Tuple[str, Callable]] = inspect.getmembers(
+            JobClass, predicate=inspect.isfunction
+        )
+        print(raw_job_list)
 
     def apply_job_call(
         self, job: JobModel, session: Dict[str, Any]
