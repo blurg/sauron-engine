@@ -1,4 +1,5 @@
 from collections import OrderedDict
+from types import ModuleType
 from typing import List, Dict, Callable, Union, Any, Type, Tuple
 from .models import JobModel
 from .parsers import DefaultParser
@@ -66,11 +67,12 @@ class Engine:
 
         return decorator
 
-    def import_jobs(self, JobClass: object):
+    def import_jobs(self, JobModule: ModuleType):
         raw_job_list: List[Tuple[str, Callable]] = inspect.getmembers(
-            JobClass, predicate=inspect.isfunction
+            JobModule, predicate=inspect.isfunction
         )
-        print(raw_job_list)
+        for job in raw_job_list:
+            self._add_callable(job[1], verbose_name=job[0])
 
     def apply_job_call(
         self, job: JobModel, session: Dict[str, Any]
