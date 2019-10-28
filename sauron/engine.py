@@ -149,6 +149,6 @@ class Engine:
         if signal_name not in self.signals.keys():
             valid_signal_names = self.signals.keys()
             raise ValueError(
-                "param signal_name: {signal_name} is not valid! Must be one of this: {valid_signal_names}"
+                f"param signal_name: {signal_name} is not valid! Must be one of this: {valid_signal_names}"
             )
         return self.signals[signal_name]

@@ -46,11 +46,11 @@ rule = """
     """
 
 # get signals instances to connect
-pre_job_hook = engine.get_signal('pre_job_call')
-post_job_hook = engine.get_signal('post_job_call')
+pre_job_hook = engine.get_signal("pre_job_call")
+post_job_hook = engine.get_signal("post_job_call")
 
-pre_engine_run = engine.get_signal('pre_engine_run')
-post_engine_run = engine.get_signal('post_engine_run')
+pre_engine_run = engine.get_signal("pre_engine_run")
+post_engine_run = engine.get_signal("post_engine_run")
 
 
 # declare functions to be called on hook

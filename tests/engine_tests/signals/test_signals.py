@@ -75,7 +75,7 @@ class TestSignalCases:
             assert isinstance(signal_obj, NamedSignal)
 
     def test_signal_connection(self):
-        signal_name = 'pre_engine_run'
+        signal_name = "pre_engine_run"
 
         for signal_name in self.signal_names:
             engine = self.setup()
