@@ -226,7 +226,13 @@ Results in the following json to be served to your frontend:
 
 ## Sessions
 
-Results are stored in a result stack inside the session, so that jobs can share data with each other. 
+Results are stored in a result stack inside the session, so that jobs can share data with each other.
+
+
+## Signals
+
+You can subscribe to run you own code every time a job starts, ends, or even when the Engine starts or finish executions.
+Check the examples in the folder: `examples/signals.py` to see how it works!
 
 
 ## More Features coming to town
