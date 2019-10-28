@@ -57,3 +57,4 @@ pytest-azurepipelines
 mkdocs
 mkdocs-material
 markdown-include
+blinker==1.4
