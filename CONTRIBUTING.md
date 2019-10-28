@@ -13,6 +13,8 @@ Please note we have a code of conduct, please follow it in all your interactions
 4. run `poetry run pytest` for tests
 5. run `poetry shell` for the venv shell
 6. run `poetry run <file>` to run the file with the python from the venv poetry created for this project.
+7. run `poetry run mkdocs serve` for live development of the docs
+8. run `poetry run mkdocs build` to build the docs
 
 if you need to add dependencies: `poetry add x` use `--dev` if you wish to add as a development dependency
 
