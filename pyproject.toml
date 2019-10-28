@@ -33,6 +33,9 @@ mypy = "^0.711.0"
 ipython = "^7.5"
 pylint = "^2.3"
 rope = "^0.14.0"
+mkdocs = "^1.0"
+mkdocs-material = "^4.4"
+markdown-include = "^0.5.1"
 
 [tool.black]
 line-length = 79
