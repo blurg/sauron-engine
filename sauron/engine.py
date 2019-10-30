@@ -1,5 +1,9 @@
 from collections import OrderedDict
 from typing import List, Dict, Callable, Union, Any, Type, Tuple
+
+from blinker import signal
+from blinker.base import NamedSignal
+
 from .models import JobModel
 from .parsers import DefaultParser
 from .exporters import DefaultExporter
@@ -14,6 +18,8 @@ class Engine:
     parsed_rule: List[JobModel] = []
 
     session: Dict[str, Any] = {}
+
+    signals: Dict[str, NamedSignal] = {}
 
     def __init__(
         self,
@@ -39,11 +45,19 @@ class Engine:
             self.exporter_class = exporter_class
         self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 
-    def _add_callable(self, function: Callable, verbose_name: str, job_type: str = "job"):
+        # signals:
+        self.signals["pre_engine_run"] = signal("pre_engine_run")
+        self.signals["post_engine_run"] = signal("post_engine_run")
+        self.signals["pre_job_call"] = signal("pre_job_call")
+        self.signals["post_job_call"] = signal("post_job_call")
+
+    def _add_callable(
+        self, function: Callable, verbose_name: str, job_type: str = "job"
+    ):
         self.callables_collected[function.__name__] = {
             "function": function,
             "verbose_name": verbose_name,
-            "type": job_type
+            "type": job_type,
         }
 
     def job(self, *args, **kwargs):
@@ -69,6 +83,14 @@ class Engine:
         target_func: Callable = self.callables_collected.get(job.name).get(
             "function"
         )
+
+        pre_signal_payload = {
+            "job_name": job.name,
+            "job": job,
+            "session": session,
+        }
+        self.signals["pre_job_call"].send(self, **pre_signal_payload)
+
         if job.args:
             result = target_func(session=session, **job.args)
         else:
@@ -79,6 +101,14 @@ class Engine:
             session["results"] = []
         session["results"].append({"job": job.name, "return": result})
         self.session = session
+
+        post_signal_payload = {
+            "job_name": job.name,
+            "job": job,
+            "session": session,
+        }
+        self.signals["post_job_call"].send(self, **post_signal_payload)
+
         return (session, result)
 
     def parse(self, unparsed_rule: Union[str, Dict[str, Any]]):
@@ -97,6 +127,9 @@ class Engine:
         Executes each job passing the current session to them
         """
 
+        pre_signal_payload = {"rule": rule, "session": session}
+        self.signals["pre_engine_run"].send(self, **pre_signal_payload)
+
         if not session:
             session = self.session
 
@@ -105,6 +138,17 @@ class Engine:
             if not result:
                 break
 
+        post_signal_payload = {"rule": rule, "session": session}
+        self.signals["post_engine_run"].send(self, **post_signal_payload)
+
     def export_metadata(self, fmt: str = "dict"):
         exporter = self.exporter_class()
         return exporter.export_jobs(self.callables_collected, fmt=fmt)
+
+    def get_signal(self, signal_name):
+        if signal_name not in self.signals.keys():
+            valid_signal_names = self.signals.keys()
+            raise ValueError(
+                f"param signal_name: {signal_name} is not valid! Must be one of this: {valid_signal_names}"
+            )
+        return self.signals[signal_name]
