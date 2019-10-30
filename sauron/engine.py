@@ -47,7 +47,6 @@ class Engine:
             self.exporter_class = exporter_class
         self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 
-
         self.runtime_metrics["jobs"] = {}
         self.runtime_metrics["total_runtime"] = 0
 
