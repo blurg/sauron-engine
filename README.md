@@ -229,6 +229,12 @@ Results in the following json to be served to your frontend:
 Results are stored in a result stack inside the session, so that jobs can share data with each other.
 
 
+## Signals
+
+You can subscribe to run you own code every time a job starts, ends, or even when the Engine starts or finish executions.
+Check the examples in the folder: `examples/signals.py` to see how it works!
+
+
 ## Runtime metrics
 
 For each `engine.run` execution, you can access the runtime metrics, per job and the total execution time, like this:
