@@ -226,8 +226,18 @@ Results in the following json to be served to your frontend:
 
 ## Sessions
 
-Results are stored in a result stack inside the session, so that jobs can share data with each other. 
+Results are stored in a result stack inside the session, so that jobs can share data with each other.
 
+
+## Runtime metrics
+
+For each `engine.run` execution, you can access the runtime metrics, per job and the total execution time, like this:
+```
+>>> engine.runtime_metrics
+{'jobs': {'first_condition': 5.0067901611328125e-06,
+          'print_the_equation': 6.794929504394531e-05},
+ 'total_runtime': 0.003393888473510742}
+```
 
 ## More Features coming to town
 

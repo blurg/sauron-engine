@@ -83,3 +83,51 @@ class TestFirstEngineCases:
         assert "second_condition" in metadata.keys()
         assert "lower_number" in metadata["second_condition"]["args"].keys()
         assert "greater_number" in metadata["second_condition"]["args"].keys()
+
+
+class TestEngineRuntimeMetricsCases:
+
+    test_string = """
+    [
+        {
+            "name": "first_condition",
+            "args": {"lower_number": 3, "greater_number": 10},
+            "job_type": "condition"
+        },
+        {
+            "name": "print_the_equation",
+            "args": {"lower_number": 3, "greater_number": 10},
+            "job_type": "action"
+        }
+    ]
+    """
+
+    def test_runtime_metrics_zero_values_before_ran(self):
+        # given:
+        expected_total_runtime = 0
+        expected_jobs = {}
+
+        # when
+        # engine didn't run
+        unran_engine = Engine()
+        # then:
+        assert (
+            unran_engine.runtime_metrics["total_runtime"]
+            == expected_total_runtime
+        )
+        assert unran_engine.runtime_metrics["jobs"] == expected_jobs
+
+    def test_runtime_metrics_with_values_after_ran(self):
+        # given:
+        expected_metrics_keys = ["jobs", "total_runtime"]
+        expected_metrics_jobs_keys = ["first_condition", "print_the_equation"]
+
+        # when:
+        engine.run(self.test_string, {})
+        metrics_keys = [k for k in engine.runtime_metrics.keys()]
+
+        # then:
+        assert metrics_keys == expected_metrics_keys
+        for job_name in expected_metrics_jobs_keys:
+            assert job_name in engine.runtime_metrics["jobs"]
+            assert engine.runtime_metrics["jobs"][job_name] > 0

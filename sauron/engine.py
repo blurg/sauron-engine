@@ -1,3 +1,4 @@
+import time
 from collections import OrderedDict
 from typing import List, Dict, Callable, Union, Any, Type, Tuple
 from .models import JobModel
@@ -14,6 +15,7 @@ class Engine:
     parsed_rule: List[JobModel] = []
 
     session: Dict[str, Any] = {}
+    runtime_metrics: Dict[str, Any] = {}
 
     def __init__(
         self,
@@ -39,11 +41,16 @@ class Engine:
             self.exporter_class = exporter_class
         self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 
-    def _add_callable(self, function: Callable, verbose_name: str, job_type: str = "job"):
+        self.runtime_metrics["jobs"] = {}
+        self.runtime_metrics["total_runtime"] = 0
+
+    def _add_callable(
+        self, function: Callable, verbose_name: str, job_type: str = "job"
+    ):
         self.callables_collected[function.__name__] = {
             "function": function,
             "verbose_name": verbose_name,
-            "type": job_type
+            "type": job_type,
         }
 
     def job(self, *args, **kwargs):
@@ -70,9 +77,17 @@ class Engine:
             "function"
         )
         if job.args:
+            tick_start = time.time()
             result = target_func(session=session, **job.args)
+            tick_end = time.time()
         else:
+            tick_start = time.time()
             result = target_func(session=session)
+            tick_end = time.time()
+
+        self.runtime_metrics["jobs"].setdefault(
+            job.name, tick_end - tick_start
+        )
         # append result of function called into session
         results = session.get("results", None)
         if not results:
@@ -100,10 +115,14 @@ class Engine:
         if not session:
             session = self.session
 
+        tick_start = time.time()
         for job in self.parse(rule):
             session, result = self.apply_job_call(job, session)
             if not result:
                 break
+        tick_end = time.time()
+
+        self.runtime_metrics["total_runtime"] = tick_end - tick_start
 
     def export_metadata(self, fmt: str = "dict"):
         exporter = self.exporter_class()
