@@ -1,3 +1,4 @@
+import time
 from collections import OrderedDict
 from typing import List, Dict, Callable, Union, Any, Type, Tuple
 
@@ -18,6 +19,7 @@ class Engine:
     parsed_rule: List[JobModel] = []
 
     session: Dict[str, Any] = {}
+    runtime_metrics: Dict[str, Any] = {}
 
     signals: Dict[str, NamedSignal] = {}
 
@@ -45,7 +47,9 @@ class Engine:
             self.exporter_class = exporter_class
         self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
 
-        # signals:
+        self.runtime_metrics["jobs"] = {}
+        self.runtime_metrics["total_runtime"] = 0
+
         self.signals["pre_engine_run"] = signal("pre_engine_run")
         self.signals["post_engine_run"] = signal("post_engine_run")
         self.signals["pre_job_call"] = signal("pre_job_call")
@@ -92,9 +96,17 @@ class Engine:
         self.signals["pre_job_call"].send(self, **pre_signal_payload)
 
         if job.args:
+            tick_start = time.time()
             result = target_func(session=session, **job.args)
+            tick_end = time.time()
         else:
+            tick_start = time.time()
             result = target_func(session=session)
+            tick_end = time.time()
+
+        self.runtime_metrics["jobs"].setdefault(
+            job.name, tick_end - tick_start
+        )
         # append result of function called into session
         results = session.get("results", None)
         if not results:
@@ -133,10 +145,14 @@ class Engine:
         if not session:
             session = self.session
 
+        tick_start = time.time()
         for job in self.parse(rule):
             session, result = self.apply_job_call(job, session)
             if not result:
                 break
+        tick_end = time.time()
+
+        self.runtime_metrics["total_runtime"] = tick_end - tick_start
 
         post_signal_payload = {"rule": rule, "session": session}
         self.signals["post_engine_run"].send(self, **post_signal_payload)

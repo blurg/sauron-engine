@@ -235,6 +235,16 @@ You can subscribe to run you own code every time a job starts, ends, or even whe
 Check the examples in the folder: `examples/signals.py` to see how it works!
 
 
+## Runtime metrics
+
+For each `engine.run` execution, you can access the runtime metrics, per job and the total execution time, like this:
+```
+>>> engine.runtime_metrics
+{'jobs': {'first_condition': 5.0067901611328125e-06,
+          'print_the_equation': 6.794929504394531e-05},
+ 'total_runtime': 0.003393888473510742}
+```
+
 ## More Features coming to town
 
 - Support pydantic types
