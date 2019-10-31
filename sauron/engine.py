@@ -1,5 +1,6 @@
 import time
 from collections import OrderedDict
+from types import ModuleType
 from typing import List, Dict, Callable, Union, Any, Type, Tuple
 
 from blinker import signal
@@ -8,6 +9,7 @@ from blinker.base import NamedSignal
 from .models import JobModel
 from .parsers import DefaultParser
 from .exporters import DefaultExporter
+import inspect
 
 
 class Engine:
@@ -80,6 +82,35 @@ class Engine:
             return function
 
         return decorator
+
+    def import_jobs(
+        self,
+        job_module: ModuleType,
+        job_metadata: List[Tuple[str, Dict[str, Any]]] = None,
+    ):
+        if job_metadata is not None:
+            raw_job_list: job_metadata
+        else:
+            try:
+                raw_job_list: List[
+                    Tuple[str, Dict[str, Any]]
+                ] = job_module.jobs_list
+            except AttributeError:
+                pre_raw_job_list: List[
+                    Tuple[str, Callable]
+                ] = inspect.getmembers(
+                    job_module, predicate=inspect.isfunction
+                )
+                raw_job_list: List[Tuple[str, Dict[str, Any]]] = [
+                    (job[0], {"callable": job[1], "verbose_name": job[0]})
+                    for job in pre_raw_job_list
+                ]
+        for job in raw_job_list:
+            self._add_callable(
+                job[1].get("callable"),
+                verbose_name=job[1].get("verbose_name", job[0]),
+                job_type=job[1].get("type", "job"),
+            )
 
     def apply_job_call(
         self, job: JobModel, session: Dict[str, Any]

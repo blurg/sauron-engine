@@ -228,6 +228,9 @@ Results in the following json to be served to your frontend:
 
 Results are stored in a result stack inside the session, so that jobs can share data with each other.
 
+## Job Modules
+
+It is possible to write generic/reusable job files to avoid duplication and streamline development.
 
 ## Signals
 
