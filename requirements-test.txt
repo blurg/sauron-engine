@@ -54,7 +54,7 @@ virtualenv==16.6.1
 wcwidth==0.1.7
 zipp==0.5.1
 pytest-azurepipelines
-mkdocs
+mkdocs==1.0.4
 mkdocs-material
 markdown-include
 blinker==1.4
