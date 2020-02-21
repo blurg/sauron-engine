@@ -49,7 +49,7 @@ six==1.14.0
 toml==0.10.0
 traitlets==4.3.3
 typed-ast==1.4.1
-urllib3==1.25.3
+urllib3==1.25.8
 virtualenv==16.6.1
 wcwidth==0.1.7
 zipp==0.5.1
