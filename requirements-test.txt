@@ -52,7 +52,7 @@ typed-ast==1.4.1
 urllib3==1.25.8
 virtualenv==20.0.4
 wcwidth==0.1.8
-zipp==0.5.1
+zipp==3.0.0
 pytest-azurepipelines
 mkdocs
 mkdocs-material
