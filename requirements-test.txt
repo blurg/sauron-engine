@@ -55,6 +55,6 @@ wcwidth==0.1.7
 zipp==0.5.1
 pytest-azurepipelines
 mkdocs
-mkdocs-material
+mkdocs-material==4.6.3
 markdown-include
 blinker==1.4
