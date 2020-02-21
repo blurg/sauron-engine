@@ -56,5 +56,5 @@ zipp==3.0.0
 pytest-azurepipelines==0.8.0
 mkdocs==1.0.4
 mkdocs-material==4.6.3
-markdown-include
+markdown-include==0.5.1
 blinker==1.4
