@@ -34,7 +34,7 @@ pluggy==0.12.0
 pre-commit==1.17.0
 prompt-toolkit==2.0.9
 ptyprocess==0.6.0
-py==1.8.0
+py==1.8.1
 pycodestyle==2.5.0
 pydantic==0.29
 pyflakes==2.1.1
