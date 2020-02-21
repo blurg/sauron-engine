@@ -15,7 +15,7 @@ decorator==4.4.0
 docopt==0.6.2
 entrypoints==0.3
 flake8==3.7.7
-identify==1.4.5
+identify==1.4.11
 idna==2.8
 importlib-metadata==0.18
 ipython==7.5.0
