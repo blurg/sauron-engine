@@ -6,7 +6,7 @@ attrs==19.3.0
 backcall==0.1.0
 black==19.10b0
 certifi==2019.11.28
-cfgv==2.0.0
+cfgv==3.0.0
 chardet==3.0.4
 Click==7.0
 coverage==4.5.3
