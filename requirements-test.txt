@@ -42,7 +42,7 @@ Pygments==2.4.2
 pytest==3.10.1
 pytest-cov==2.7.1
 PyYAML==5.1.1
-requests==2.22.0
+requests==2.23.0
 ruamel.yaml==0.16.5
 ruamel.yaml.clib==0.1.2
 six==1.12.0
