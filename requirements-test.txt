@@ -49,12 +49,12 @@ six==1.14.0
 toml==0.10.0
 traitlets==4.3.3
 typed-ast==1.4.1
-urllib3==1.25.3
+urllib3==1.25.8
 virtualenv==20.0.8
-wcwidth==0.1.7
+wcwidth==0.1.8
 zipp==3.1.0
-pytest-azurepipelines
+pytest-azurepipelines==0.8.0
 mkdocs==1.1
-mkdocs-material
+mkdocs-material==4.6.3
 markdown-include==0.5.1
 blinker==1.4
