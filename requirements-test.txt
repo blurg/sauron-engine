@@ -40,7 +40,7 @@ pydantic==0.29
 pyflakes==2.1.1
 Pygments==2.5.2
 pytest==3.10.1
-pytest-cov==2.7.1
+pytest-cov==2.8.1
 PyYAML==5.1.1
 requests==2.23.0
 ruamel.yaml==0.16.5
