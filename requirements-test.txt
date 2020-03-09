@@ -8,7 +8,7 @@ black==19.10b0
 certifi==2019.11.28
 cfgv==3.1.0
 chardet==3.0.4
-Click==7.0
+Click==7.1
 coverage==5.0.3
 coveralls==1.11.1
 decorator==4.4.2
