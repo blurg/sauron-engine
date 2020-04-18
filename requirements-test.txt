@@ -36,7 +36,7 @@ prompt-toolkit==3.0.5
 ptyprocess==0.6.0
 py==1.8.1
 pycodestyle==2.5.0
-pydantic==1.4
+pydantic==1.5
 pyflakes==2.2.0
 Pygments==2.6.1
 pytest==5.4.1
