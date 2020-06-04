@@ -45,8 +45,8 @@ PyYAML==5.3.1
 requests==2.23.0
 ruamel.yaml==0.16.10
 ruamel.yaml.clib==0.1.2
+toml==0.10.1
 six==1.15.0
-toml==0.10.0
 traitlets==4.3.3
 typed-ast==1.4.1
 urllib3==1.25.9
