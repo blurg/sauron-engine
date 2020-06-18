@@ -50,7 +50,7 @@ six==1.15.0
 traitlets==4.3.3
 typed-ast==1.4.1
 urllib3==1.25.9
-virtualenv==20.0.21
+virtualenv==20.0.23
 wcwidth==0.2.4
 zipp==3.1.0
 pytest-azurepipelines==0.8.0
