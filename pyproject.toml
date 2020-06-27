@@ -22,7 +22,7 @@ blinker = "^1.4"
 
 [tool.poetry.dev-dependencies]
 isort = "*"
-pytest = "^3.0"
+pytest = "^3.6"
 coverage = "4.5.3"
 coveralls = "^1.8"
 flake8 = "^3.7"
