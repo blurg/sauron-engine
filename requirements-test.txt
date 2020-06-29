@@ -6,7 +6,7 @@ isort
 pytest == 5.4.3
 coverage == 4.5.3
 coveralls == 1.8
-flake8 == 3.7
+flake8==3.8.3
 pytest-cov == 2.7
 mypy == 0.711.0
 ipython == 7.5
