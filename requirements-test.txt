@@ -1,6 +1,6 @@
 pydantic == 0.29.0
 mypy == 0.711.0
-ruamel.yaml == 0.16.5
+ruamel.yaml==0.16.10
 blinker == 1.4
 isort  
 pytest == 5.4.3
