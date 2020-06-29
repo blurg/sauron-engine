@@ -4,7 +4,7 @@ ruamel.yaml == 0.16.5
 blinker == 1.4
 isort  
 pytest == 5.4.3
-coverage == 4.5.3
+coverage==5.1
 coveralls == 1.8
 flake8 == 3.7
 pytest-cov == 2.7
