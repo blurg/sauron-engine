@@ -1,14 +1,14 @@
-pydantic == 0.29.0
-mypy == 0.711.0
-ruamel.yaml == 0.16.5
+pydantic==1.5.1
+mypy == 0.782
+ruamel.yaml==0.16.10
 blinker == 1.4
-isort  
+isort==4.3.21  
 pytest == 5.4.3
-coverage == 4.5.3
+coverage==5.1
 coveralls==2.0.0
 flake8 == 3.7
 pytest-cov == 2.7
-mypy == 0.711.0
+mypy==0.782
 ipython == 7.5
 pylint == 2.3
 mkdocs == 1.0
