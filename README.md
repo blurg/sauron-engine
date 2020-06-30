@@ -257,17 +257,3 @@ For each `engine.run` execution, you can access the runtime metrics, per job and
 
 - We need all the help we can get. Please read [CONTRIBUTE.md](CONTRIBUTING.md) for instructions
 
-## Author
-
-👤 **João Ricardo Lhullier Lugão**
-
-- Twitter: [@joaovoce](https://twitter.com/joaovoce)
-- Github: [@jlugao](https://github.com/jlugao)
-
-## Show your support
-
-Give a ⭐️ if this project helped you!
-
----
-
-_This README was generated with ❤️ by [readme-md-generator](https://github.com/kefranabg/readme-md-generator)_
