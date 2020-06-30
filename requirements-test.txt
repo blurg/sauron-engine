@@ -11,6 +11,6 @@ pytest-cov==2.10.0
 mypy==0.782
 ipython==7.16.1
 pylint==2.5.3
-mkdocs == 1.0
+mkdocs==1.1.2
 mkdocs-material == 4.4
 markdown-include == 0.5.1
