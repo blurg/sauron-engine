@@ -2,7 +2,7 @@ pydantic==1.5.1
 mypy == 0.782
 ruamel.yaml==0.16.10
 blinker == 1.4
-isort==4.3.21  
+isort==5.1.0  
 pytest == 5.4.3
 coverage==5.1
 coveralls==2.0.0
