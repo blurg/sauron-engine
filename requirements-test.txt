@@ -1,4 +1,4 @@
-pydantic==1.5.1
+pydantic==1.6.1
 mypy == 0.782
 ruamel.yaml==0.16.10
 blinker == 1.4
