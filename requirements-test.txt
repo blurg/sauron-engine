@@ -3,7 +3,7 @@ mypy == 0.782
 ruamel.yaml==0.16.12
 blinker == 1.4
 isort==5.5.3  
-pytest==6.1.0
+pytest==6.2.2
 coverage==5.3
 coveralls==2.1.2
 flake8==3.8.3
