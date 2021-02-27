@@ -9,7 +9,7 @@ coveralls==2.1.2
 flake8==3.8.3
 pytest-cov==2.10.1
 mypy==0.782
-ipython==7.16.1
+ipython==7.21.0
 pylint==2.6.0
 mkdocs==1.1.2
 mkdocs-material==5.4.0
