@@ -36,6 +36,7 @@ pylint = "^2.3"
 rope = "^0.14.0"
 mkdocs = "^1.0"
 markdown-include = "^0.5.1"
+pytest-azurepipelines = "^0.8.0"
 
 [tool.black]
 line-length = 79
