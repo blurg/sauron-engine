@@ -38,9 +38,9 @@ steps:
   displayName: 'Linting - flake8'
 
 - script: |
-    poetry run pytest --cov
+    pytest --cov
     export CIRCLE_BRANCH=$BUILD_SOURCEBRANCH
-    poetry run coveralls
+    coveralls
   displayName: "coveralls"
   env:
     CIRCLECI: 1
