@@ -5,7 +5,7 @@ atomicwrites==1.4.0; python_version >= "2.7" and python_full_version < "3.0.0" o
 attrs==21.2.0; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.5.0"
 backcall==0.2.0; python_version >= "3.6"
 backports.entry-points-selectable==1.1.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3.6"
-black==20.8b1; python_version >= "3.6"
+black==21.7b0; python_version >= "3.6"
 blinker==1.4
 certifi==2021.5.30; python_version >= "2.7" and python_full_version < "3.0.0" or python_full_version >= "3.6.0"
 cfgv==3.0.0; python_version >= "3.6"
