@@ -194,9 +194,9 @@ ruamel.yaml.clib==0.2.6; platform_python_implementation == "CPython" and python_
     --hash=sha256:3fb9575a5acd13031c57a62cc7823e5d2ff8bc3835ba4d94b921b4e6ee664104 \
     --hash=sha256:825d5fccef6da42f3c8eccd4281af399f21c02b32d98e113dbc631ea6a6ecbc7 \
     --hash=sha256:4ff604ce439abb20794f05613c374759ce10e3595d1867764dd1ae675b85acbd
-ruamel.yaml==0.16.13 \
-    --hash=sha256:64b06e7873eb8e1125525ecef7345447d786368cadca92a7cd9b59eae62e95a3 \
-    --hash=sha256:bb48c514222702878759a05af96f4b7ecdba9b33cd4efcf25c86b882cef3a942
+ruamel.yaml==0.17.10 \
+    --hash=sha256:106bc8d6dc6a0ff7c9196a47570432036f41d556b779c6b4e618085f57e39e67 \
+    --hash=sha256:ffb9b703853e9e8b7861606dfdab1026cf02505bade0653d1880f4b2db47f815
 six==1.16.0; python_version >= "3.6" and python_full_version < "3.0.0" or python_full_version >= "3.3.0" and python_version >= "3.6" \
     --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254 \
     --hash=sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926
