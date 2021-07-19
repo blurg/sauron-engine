@@ -41,7 +41,7 @@ mkdocs-material==7.1.11
 mkdocs==1.2.2; python_version >= "3.6"
 more-itertools==8.8.0; python_version >= "3.5" and python_full_version < "3.0.0" or python_full_version >= "3.5.0" and python_version >= "3.5"
 mypy-extensions==0.4.3; python_version >= "3.6"
-mypy==0.711
+mypy==0.910
 nodeenv==1.6.0; python_version >= "3.6"
 packaging==21.0; python_version >= "3.6"
 parso==0.8.2; python_version >= "3.6"
