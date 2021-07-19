@@ -17,6 +17,8 @@ pydantic = "^0.29.0"
 mypy = "^0.711.0"
 "ruamel.yaml" = "^0.16.5"
 blinker = "^1.4"
+pylint = "^2.9.3"
+mkdocs-material = "^7.1.11"
 
 
 [tool.poetry.dev-dependencies]
@@ -33,7 +35,6 @@ ipython = "^7.5"
 pylint = "^2.3"
 rope = "^0.14.0"
 mkdocs = "^1.0"
-mkdocs-material = "^4.4"
 markdown-include = "^0.5.1"
 
 [tool.black]
