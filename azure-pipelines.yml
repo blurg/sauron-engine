@@ -38,12 +38,6 @@ steps:
   displayName: 'Linting - flake8'
 
 - script: |
-    pip install pytest pytest-azurepipelines
-    pip install pytest-cov
-    pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
-  displayName: 'pytest'
-
-- script: |
     poetry run pytest --cov
     export CIRCLE_BRANCH=$BUILD_SOURCEBRANCH
     poetry run coveralls
@@ -52,6 +46,10 @@ steps:
     CIRCLECI: 1
     CIRCLE_BUILD_NUM: $(Build.BuildNumber)
     COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
+
+- script: |
+    pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+  displayName: "coverage reports"
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
