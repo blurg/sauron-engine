@@ -1,5 +1,5 @@
 [run]
-source = sauron_rule_engine
+source = sauron
 
 [report]
 ignore_errors = True
