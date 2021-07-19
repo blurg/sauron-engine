@@ -1,13 +1,12 @@
 <h1 align="center">Sauron Rule engine - One engine to rule them all </h1>
 <p>
   <img src="https://img.shields.io/badge/version-0.1-blue.svg?cacheSeconds=2592000" />
-  <a href='https://coveralls.io/github/jlugao/sauron-rule-engine?branch=master'><img src='https://coveralls.io/repos/github/jlugao/sauron-rule-engine/badge.svg?branch=master&service=github' alt='Coverage Status' /></a>
-
+  <a href='https://coveralls.io/github/blurg/sauron-engine?branch=master'><img src='https://coveralls.io/repos/github/blurg/sauron-engine/badge.svg?branch=master' alt='Coverage Status' /></a>
 <img alt="GitHub" src="https://img.shields.io/github/license/jlugao/sauron-rule-engine.svg?style=plastic">
 
 </p>
 
-[![Build Status](https://dev.azure.com/jlugao/Sauron%20Engine/_apis/build/status/jlugao.sauron-rule-engine?branchName=master)](https://dev.azure.com/jlugao/Sauron%20Engine/_build/latest?definitionId=1&branchName=master)
+[![Build Status](https://dev.azure.com/blurg-org/Sauron%20Engine/_apis/build/status/blurg.sauron-engine?branchName=master)](https://dev.azure.com/blurg-org/Sauron%20Engine/_build/latest?definitionId=1&branchName=master)
 
 > A simple rule engine to be used in python, it is based on simple rules and actions that can be chained with each other. The idea is to run the rule processor on events and have it mutate data or trigger actions
 
