@@ -17,9 +17,9 @@ ghp-import==2.0.1; python_version >= "3.6" \
 importlib-metadata==4.6.1; python_version < "3.8" and python_version >= "3.6" \
     --hash=sha256:9f55f560e116f8643ecf2922d9cd3e1c7e8d52e683178fecd9d08f6aa357e11e \
     --hash=sha256:079ada16b7fc30dfbb5d13399a5113110dab1aa7c2bc62f66af75f0b717c8cac
-isort==5.8.0; python_version >= "3.6" and python_version < "4.0" \
-    --hash=sha256:2bb1680aad211e3c9944dbce1d4ba09a989f04e238296c87fe2139faa26d655d \
-    --hash=sha256:0a943902919f65c5684ac4e0154b1ad4fac6dcaa5d9f3426b732f1c8b5419be6
+isort==5.9.2; python_version >= "3.6" and python_version < "4.0" \
+    --hash=sha256:eed17b53c3e7912425579853d078a0832820f023191561fcee9d7cae424e0813 \
+    --hash=sha256:f65ce5bd4cbc6abdfbe29afc2f0245538ab358c14590912df638033f157d555e
 jinja2==3.0.1; python_version >= "3.6" \
     --hash=sha256:1f06f2da51e7b56b8f238affdd6b4e2c61e39598a378cc49345bc1bd42a978a4 \
     --hash=sha256:703f484b47a6af502e743c9122595cc812b0271f661722403114f71a79d0f5a4
