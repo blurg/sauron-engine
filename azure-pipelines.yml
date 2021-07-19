@@ -48,7 +48,7 @@ steps:
     COVERALLS_REPO_TOKEN: $(coveralls_repo_token)
 
 - script: |
-    pytest --doctest-modules --junitxml=junit/test-results.xml --cov=. --cov-report=xml
+    pytest --junitxml=junit/test-results.xml --cov=. --cov-report=xml
   displayName: "coverage reports"
 
 - task: PublishTestResults@2
