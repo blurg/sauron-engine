@@ -8,7 +8,6 @@ repository = "https://github.com/jlugao/sauron-rule-engine"
 license = "MIT"
 packages = [
   { include = "sauron" },
-  { include = "sauron_rule_engine" }
   ]
 
 
@@ -18,6 +17,8 @@ pydantic = "^0.29.0"
 mypy = "^0.711.0"
 "ruamel.yaml" = "^0.16.5"
 blinker = "^1.4"
+pylint = "^2.9.3"
+mkdocs-material = "^7.1.11"
 
 
 [tool.poetry.dev-dependencies]
@@ -26,15 +27,14 @@ pytest = "^3.6"
 coverage = "4.5.3"
 coveralls = "^1.8"
 flake8 = "^3.7"
-black = {version = "^18.3-alpha.0",allows-prereleases = true}
-pre-commit = {version = "^1.17",allows-prereleases = true}
+black = {version = "*",allow-prereleases = true}
+pre-commit = {version = "*",allow-prereleases = true}
 pytest-cov = "^2.7"
 mypy = "^0.711.0"
 ipython = "^7.5"
 pylint = "^2.3"
 rope = "^0.14.0"
 mkdocs = "^1.0"
-mkdocs-material = "^4.4"
 markdown-include = "^0.5.1"
 
 [tool.black]
