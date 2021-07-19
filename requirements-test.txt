@@ -27,7 +27,7 @@ importlib-metadata==4.6.1; python_version >= "3.6" and python_full_version < "3.
 importlib-resources==5.2.0; python_version < "3.7" and python_version >= "3.6" and (python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "3.7" or python_full_version >= "3.5.0" and python_version >= "3.6" and python_version < "3.7")
 ipython-genutils==0.2.0; python_version >= "3.6"
 ipython==7.16.1; python_version >= "3.6"
-isort==5.8.0; python_version >= "3.6" and python_version < "4.0"
+isort==5.9.2; python_version >= "3.6" and python_version < "4.0"
 jedi==0.18.0; python_version >= "3.6"
 jinja2==3.0.1; python_version >= "3.6"
 lazy-object-proxy==1.6.0; python_version >= "3.6" and python_full_version < "3.0.0" and python_version < "4.0" or python_version >= "3.6" and python_version < "4.0" and python_full_version >= "3.6.0"
