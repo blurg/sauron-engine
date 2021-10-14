@@ -17,19 +17,19 @@ pydantic = "^1.6.2"
 mypy = "^0.711.0"
 "ruamel.yaml" = "^0.16.5"
 blinker = "^1.4"
-pylint = "^2.9.3"
+pylint = "^2.11.1"
 mkdocs-material = "^7.1.11"
 
 
 [tool.poetry.dev-dependencies]
 isort = "*"
-pytest = "^3.6"
-coverage = "4.5.3"
-coveralls = "^1.8"
+pytest = "^6.2.5"
+coverage = "^6.0"
+coveralls = "<4.0"
 flake8 = "^3.7"
 black = {version = "*",allow-prereleases = true}
 pre-commit = {version = "*",allow-prereleases = true}
-pytest-cov = "^2.7"
+pytest-cov = "^3.0.0"
 mypy = "^0.711.0"
 ipython = "^7.5"
 pylint = "^2.3"
