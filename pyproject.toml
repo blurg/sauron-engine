@@ -14,10 +14,10 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.6"
 pydantic = "^1.6.2"
-mypy = "^0.711.0"
+mypy = "^0.910"
 "ruamel.yaml" = "^0.16.5"
 blinker = "^1.4"
-pylint = "^2.11.1"
+pylint = "^2.3"
 mkdocs-material = "^7.1.11"
 
 
@@ -26,11 +26,11 @@ isort = "*"
 pytest = "^6.2.5"
 coverage = "^6.0"
 coveralls = "<4.0"
-flake8 = "^3.7"
+flake8 = "^4.0.1"
 black = {version = "*",allow-prereleases = true}
 pre-commit = {version = "*",allow-prereleases = true}
 pytest-cov = "^3.0.0"
-mypy = "^0.711.0"
+mypy = "^0.910"
 ipython = "^7.5"
 pylint = "^2.3"
 rope = "^0.14.0"
