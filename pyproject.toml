@@ -31,7 +31,7 @@ black = {version = "*",allow-prereleases = true}
 pre-commit = {version = "*",allow-prereleases = true}
 pytest-cov = "^3.0.0"
 mypy = "^0.910"
-ipython = "^7.5"
+ipython = "^7.16"
 pylint = "^2.3"
 rope = "^0.14.0"
 mkdocs = "^1.2.3"
