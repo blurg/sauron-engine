@@ -55,11 +55,11 @@ post_engine_run = engine.get_signal("post_engine_run")
 
 # declare functions to be called on hook
 def pre_hook_callback(sender, **kwargs):
-    print(f"[PRE] Caught signal from {sender} \n\twith kw:{kwargs}")
+    print(f"[PRE] Caught signal from {sender} \n\twith kw: {kwargs}")
 
 
 def post_hook_callback(sender, **kwargs):
-    print(f"[POST] Caught signal from {sender} \n\twith kw:{kwargs}")
+    print(f"[POST] Caught signal from {sender} \n\twith kw: {kwargs}")
 
 
 # connect signals and callbacks:
