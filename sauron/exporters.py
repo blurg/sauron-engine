@@ -1,22 +1,13 @@
-from collections import OrderedDict
-from typing import List, Dict, Callable, Union, Any, Type
-from .models import JobModel
-from enum import Enum
 import inspect
 import json as json_lib
+from enum import Enum
+from typing import Any, Callable, Dict, Mapping, Union
+
 from ruamel.yaml import YAML
 from ruamel.yaml.compat import StringIO
 
 
 class MyYAML(YAML):
-    """
-        ruamel.yaml lib was chosen as it supports yaml1.2, this gives us json parsing
-        together with yaml parsing
-        Allows to dump yaml to a string. This can/should be reviewed as this is less
-        performatic than writing to a file or stdout according to docs
-        https://yaml.readthedocs.io/en/latest/example.html#output-of-dump-as-a-string
-    """
-
     def dump(self, data, stream=None, **kw):
         inefficient = False
         if stream is None:
@@ -29,7 +20,7 @@ class MyYAML(YAML):
 
 class DefaultExporter:
     def __init__(self):
-        self.yaml: Type[YAML] = MyYAML(typ="safe")
+        self.yaml: Any = MyYAML(typ="safe")
 
     def get_job_types(self):
         # TODO: implement this method to get the job types available
@@ -45,7 +36,7 @@ class DefaultExporter:
         name = annotation.__name__
         choices = None
         if Enum in annotation.__mro__:
-            choices = [choice for choice in annotation.__members__]
+            choices = list(annotation.__members__)
         defaults = param.default
         if defaults is param.empty:
             defaults = None
@@ -56,7 +47,7 @@ class DefaultExporter:
         cls, input_function: Callable
     ) -> Dict[str, Any]:
         """
-            Metadata about arguments documentation and the function itself
+        Metadata about arguments documentation and the function itself
         """
         signature: inspect.Signature = inspect.signature(input_function)
         arguments_metadata: Dict[str, Dict[str, Any]] = {}
@@ -85,14 +76,14 @@ class DefaultExporter:
 
         return metadata
 
-    def export_job(self, jobs: Dict[str, Any]) -> Dict[str, Any]:
+    def export_job(self, jobs: Mapping[str, Any]) -> Dict[str, Any]:
         result = {}
         for name, item in jobs.items():
             result[name] = self.get_metadata(item)
         return result
 
     def export_jobs(
-        self, data: Dict[str, Callable], fmt: str = "dict"
+        self, data: Mapping[str, Any], fmt: str = "dict"
     ) -> Union[str, Dict[str, Any]]:
         jobs = self.export_job(data)
         if fmt == "json":
@@ -105,11 +96,10 @@ class DefaultExporter:
 
 class RuleEngineExporter(DefaultExporter):
     def __init__(self):
-        self.yaml: Type[YAML] = MyYAML(typ="safe")
+        self.yaml: Any = MyYAML(typ="safe")
 
-    def export_job(self, jobs: Dict[str, Any]) -> Dict[str, Any]:
+    def export_job(self, jobs: Mapping[str, Any]) -> Dict[str, Any]:
         result = super().export_job(jobs)
-        # Separar jobs por tipo
         result_splited_by_type = {}
         for key, value in result.items():
             current_type = result_splited_by_type.get(value["type"], {})
@@ -119,7 +109,7 @@ class RuleEngineExporter(DefaultExporter):
         return result_splited_by_type
 
     def export_jobs(
-        self, data: Dict[str, Callable], fmt: str = "dict"
+        self, data: Mapping[str, Any], fmt: str = "dict"
     ) -> Union[str, Dict[str, Any]]:
         jobs = self.export_job(data)
         if fmt == "json":

@@ -1,7 +1,6 @@
-import pytest
-from sauron.engine import Engine
-from pprint import pprint
 from blinker.base import NamedSignal
+
+from sauron.engine import Engine
 
 engine = Engine()
 
@@ -81,8 +80,7 @@ class TestSignalCases:
             engine = self.setup()
             hook = engine.get_signal(signal_name)
 
-            def hook_call_back(sender, **kwargs):
-                ...
+            def hook_call_back(sender, **kwargs): ...
 
             # when:
             hook.connect(hook_call_back, sender=engine)

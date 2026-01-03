@@ -1,10 +1,14 @@
 repos:
-  - repo: https://github.com/ambv/black
-    rev: stable
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.9
     hooks:
-      - id: black
-        language_version: python3.7
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v1.2.3
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+  - repo: local
     hooks:
-      - id: flake8
+      - id: zuban
+        name: zuban (type checking)
+        entry: poetry run zuban check
+        language: system
+        types: [python]

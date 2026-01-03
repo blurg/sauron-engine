@@ -1,8 +1,9 @@
-import json
 from json.decoder import JSONDecodeError
-from typing import List, Type, Union, Dict, Any
-from sauron.models import JobModel
+from typing import List, Type, Union
+
 from ruamel.yaml import YAML
+
+from sauron.models import JobModel
 
 
 class DefaultParser:
@@ -35,7 +36,7 @@ class DefaultParser:
         try:
             jobs: list = self.yaml.load(jobs_input)
         except JSONDecodeError:
-            raise ValueError("jobs param is not a valid json string")
+            raise ValueError("jobs param is not a valid json string") from None
         else:
             return self._parse_jobs_from_list(jobs)
 
@@ -69,11 +70,11 @@ class RuleEngineParser(DefaultParser):
             decoded_jobs: dict = self.yaml.load(jobs_input)
             jobs: list = decoded_jobs["conditions"] + decoded_jobs["actions"]
         except JSONDecodeError:
-            raise ValueError("jobs param is not a valid json string")
+            raise ValueError("jobs param is not a valid json string") from None
         else:
             return self._parse_jobs_from_list(jobs)
 
-    def parse(self, jobs_input: Union[List, str]) -> List[JobModel]:
+    def parse(self, jobs_input: Union[List, str, dict]) -> List[JobModel]:
         """
         Main method called to parse any jobs
         """

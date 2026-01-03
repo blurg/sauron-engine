@@ -1,19 +1,28 @@
+import inspect
 import time
 from collections import OrderedDict
 from types import ModuleType
-from typing import List, Dict, Callable, Union, Any, Type, Tuple
+from typing import (
+    Any,
+    Callable,
+    Dict,
+    List,
+    Optional,
+    Tuple,
+    Type,
+    Union,
+    cast,
+)
 
 from blinker import signal
 from blinker.base import NamedSignal
 
+from .exporters import DefaultExporter
 from .models import JobModel
 from .parsers import DefaultParser
-from .exporters import DefaultExporter
-import inspect
 
 
 class Engine:
-
     job_model_class: Type[JobModel] = JobModel
     parser_class: Type[DefaultParser] = DefaultParser
     exporter_class: Type[DefaultExporter] = DefaultExporter
@@ -27,10 +36,10 @@ class Engine:
 
     def __init__(
         self,
-        context: Dict[str, Any] = None,
-        job_model: Type[JobModel] = None,
-        parser_class: Type[DefaultParser] = None,
-        exporter_class: Type[DefaultExporter] = None,
+        context: Optional[Dict[str, Any]] = None,
+        job_model: Optional[Type[JobModel]] = None,
+        parser_class: Optional[Type[DefaultParser]] = None,
+        exporter_class: Optional[Type[DefaultExporter]] = None,
     ):
         """
         - Sessions can be initialized with a context provided by the user
@@ -47,7 +56,9 @@ class Engine:
 
         if exporter_class:
             self.exporter_class = exporter_class
-        self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
+        self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = (
+            OrderedDict()
+        )
 
         self.runtime_metrics["jobs"] = {}
         self.runtime_metrics["total_runtime"] = 0
@@ -75,9 +86,11 @@ class Engine:
         """
 
         def decorator(function: Callable):
-            verbose_name: str = kwargs.get("verbose_name", None)
+            verbose_name: Optional[str] = kwargs.get("verbose_name", None)
             if args:
                 verbose_name = args[0]
+            if verbose_name is None:
+                verbose_name = function.__name__
             self._add_callable(function, verbose_name)
             return function
 
@@ -86,45 +99,55 @@ class Engine:
     def import_jobs(
         self,
         job_module: ModuleType,
-        job_metadata: List[Tuple[str, Dict[str, Any]]] = None,
+        job_metadata: Optional[List[Tuple[str, Dict[str, Any]]]] = None,
     ):
         if job_metadata is not None:
-            raw_job_list: job_metadata
+            raw_job_list = job_metadata
         else:
             try:
-                raw_job_list: List[
-                    Tuple[str, Dict[str, Any]]
-                ] = job_module.jobs_list
+                raw_job_list: List[Tuple[str, Dict[str, Any]]] = (
+                    job_module.jobs_list
+                )
             except AttributeError:
-                pre_raw_job_list: List[
-                    Tuple[str, Callable]
-                ] = inspect.getmembers(
-                    job_module, predicate=inspect.isfunction
+                pre_raw_job_list: List[Tuple[str, Callable]] = (
+                    inspect.getmembers(
+                        job_module, predicate=inspect.isfunction
+                    )
                 )
                 raw_job_list: List[Tuple[str, Dict[str, Any]]] = [
                     (job[0], {"callable": job[1], "verbose_name": job[0]})
                     for job in pre_raw_job_list
                 ]
         for job in raw_job_list:
+            callable_func = job[1].get("callable")
+            verbose_name = job[1].get("verbose_name", job[0])
+            job_type = job[1].get("type", "job")
+            if callable_func is None:
+                raise ValueError(f"Job '{job[0]}' has no callable")
             self._add_callable(
-                job[1].get("callable"),
-                verbose_name=job[1].get("verbose_name", job[0]),
-                job_type=job[1].get("type", "job"),
+                callable_func,
+                verbose_name=verbose_name,
+                job_type=job_type,
             )
 
     def apply_job_call(
         self, job: JobModel, session: Dict[str, Any]
     ) -> Tuple[Dict[str, Any], Any]:
-        target_func: Callable = self.callables_collected.get(job.name).get(
-            "function"
-        )
+        job_data = self.callables_collected.get(job.name)
+        if job_data is None:
+            raise ValueError(
+                f"Job '{job.name}' not found in callables_collected"
+            )
+        target_func: Callable = cast(Callable, job_data.get("function"))
+        if target_func is None:
+            raise ValueError(f"Job '{job.name}' has no callable function")
 
         pre_signal_payload = {
             "job_name": job.name,
             "job": job,
             "session": session,
         }
-        self.signals["pre_job_call"].send(self, **pre_signal_payload)
+        self.signals["pre_job_call"].send(self, **pre_signal_payload)  # type: ignore[arg-type]
 
         if job.args:
             tick_start = time.time()
@@ -150,13 +173,13 @@ class Engine:
             "job": job,
             "session": session,
         }
-        self.signals["post_job_call"].send(self, **post_signal_payload)
+        self.signals["post_job_call"].send(self, **post_signal_payload)  # type: ignore[arg-type]
 
         return (session, result)
 
     def parse(self, unparsed_rule: Union[str, Dict[str, Any]]):
         """
-            Parses rules
+        Parses rules
         """
         parser: DefaultParser = self.parser_class()
         parsed_rule: List[JobModel] = parser.parse(unparsed_rule)
@@ -164,14 +187,16 @@ class Engine:
         return parsed_rule
 
     def run(
-        self, rule: Union[str, Dict[str, Any]], session: Dict[str, Any] = None
+        self,
+        rule: Union[str, Dict[str, Any]],
+        session: Optional[Dict[str, Any]] = None,
     ):
         """
         Executes each job passing the current session to them
         """
 
         pre_signal_payload = {"rule": rule, "session": session}
-        self.signals["pre_engine_run"].send(self, **pre_signal_payload)
+        self.signals["pre_engine_run"].send(self, **pre_signal_payload)  # type: ignore[arg-type]
 
         if not session:
             session = self.session
@@ -186,7 +211,7 @@ class Engine:
         self.runtime_metrics["total_runtime"] = tick_end - tick_start
 
         post_signal_payload = {"rule": rule, "session": session}
-        self.signals["post_engine_run"].send(self, **post_signal_payload)
+        self.signals["post_engine_run"].send(self, **post_signal_payload)  # type: ignore[arg-type]
 
     def export_metadata(self, fmt: str = "dict"):
         exporter = self.exporter_class()

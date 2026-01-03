@@ -1,5 +1,5 @@
-from typing import Union, List, Tuple, Any
 from decimal import Decimal
+from typing import Any, List, Tuple, Union
 
 
 def always_true(context):

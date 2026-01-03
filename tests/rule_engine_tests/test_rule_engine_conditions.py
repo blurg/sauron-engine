@@ -93,5 +93,5 @@ def test_crashes_on_condition_crash(capsys):
         ]
     }
     """
-    with pytest.raises(Exception):
-        assert engine.run(rule)
+    with pytest.raises(Exception):  # noqa: B017
+        engine.run(rule)

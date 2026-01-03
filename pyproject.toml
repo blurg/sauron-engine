@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "sauron-rule-engine"
-version = "1.0.3"
+version = "2.0.0"
 description = "A simple rule engine implemented in python"
 authors = ["jlugao <joaolhullier@gmail.com>"]
 readme = "README.md"
@@ -12,49 +12,46 @@ packages = [
 
 
 [tool.poetry.dependencies]
-python = "^3.8"
-pydantic = "^1.6.2"
-"ruamel.yaml" = "^0.16.5"
+python = "^3.9"
+pydantic = "^2.10"
+"ruamel.yaml" = "^0.18"
 blinker = "^1.4"
 pylint = "^2.3"
 mkdocs-material = "^7.1.11"
-mypy = "^1.9.0"
-flake8 = "^5.0.0"
+zuban = "^0.1.0"
 
 
-[tool.poetry.dev-dependencies]
-isort = "*"
-pytest = "^6.2.5"
-coverage = "^6.0"
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3"
+coverage = "^7.0"
 coveralls = "<4.0"
-flake8 = "^5.0.0"
-black = {version = "*",allow-prereleases = true}
-pre-commit = {version = "*",allow-prereleases = true}
-pytest-cov = "^3.0.0"
-mypy = "^1.9.0"
+ruff = "^0.8"
+pre-commit = {version = "*", allow-prereleases = true}
+pytest-cov = "^5.0"
 ipython = "^7.16"
 pylint = "^2.3"
 rope = "^0.14.0"
 mkdocs = "^1.2.3"
 markdown-include = "^0.5.1"
-pytest-azurepipelines = "^0.8.0"
 
-[tool.black]
+[tool.ruff]
 line-length = 79
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
+target-version = "py39"
+exclude = [
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".tox",
+    ".venv",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "C", "I"]
+ignore = ["E203", "E266", "E501"]
 
 [build-system]
 requires = ["poetry>=0.12"]

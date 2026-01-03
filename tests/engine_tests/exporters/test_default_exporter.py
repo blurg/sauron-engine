@@ -1,6 +1,7 @@
-from sauron.exporters import DefaultExporter
-import pytest
+from typing import Any, Dict, cast
+
 from sauron.engine import Engine
+from sauron.exporters import DefaultExporter
 
 engine = Engine()
 
@@ -32,31 +33,37 @@ def print_the_equation(
 
 
 class TestDefaultExporter:
-    def setup(self):
+    exported_jobs: Dict[str, Any]
+    exported_jobs_as_json: str
+    exported_jobs_as_yaml: str
+
+    def setup_method(self):
         exporter = DefaultExporter()
         print(engine.callables_collected)
-        self.exported_jobs = exporter.export_jobs(engine.callables_collected)
-        self.exported_jobs_as_json = exporter.export_jobs(
-            engine.callables_collected, fmt="json"
+        self.exported_jobs = cast(
+            Dict[str, Any], exporter.export_jobs(engine.callables_collected)
         )
-        self.exported_jobs_as_yaml = exporter.export_jobs(
-            engine.callables_collected, fmt="yaml"
+        self.exported_jobs_as_json = cast(
+            str, exporter.export_jobs(engine.callables_collected, fmt="json")
+        )
+        self.exported_jobs_as_yaml = cast(
+            str, exporter.export_jobs(engine.callables_collected, fmt="yaml")
         )
 
     def test_can_export_simple_engine(self):
-        assert type(self.exported_jobs) is dict
+        assert isinstance(self.exported_jobs, dict)
 
     def test_can_export_simple_engine_as_json(self):
-        assert type(self.exported_jobs_as_json) is str
+        assert isinstance(self.exported_jobs_as_json, str)
 
     def test_can_export_simple_engine_as_yaml(self):
-        assert type(self.exported_jobs_as_yaml) is str
+        assert isinstance(self.exported_jobs_as_yaml, str)
 
     def test_exported_data_has_three_jobs(self):
         assert len(self.exported_jobs) == 3
 
     def test_exported_data_has_job_names_accurate(self):
-        assert [name for name in self.exported_jobs.keys()] == [
+        assert list(self.exported_jobs.keys()) == [
             "first_condition",
             "second_condition",
             "print_the_equation",

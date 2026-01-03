@@ -1,6 +1,6 @@
-import pytest
+from typing import Any, Dict, cast
+
 from sauron.engine import Engine
-from pprint import pprint
 
 engine = Engine()
 
@@ -32,7 +32,6 @@ def print_the_equation(
 
 
 class TestFirstEngineCases:
-
     test_string = """
     [
         {
@@ -48,36 +47,38 @@ class TestFirstEngineCases:
     ]
     """
 
-    def setup(self):
+    def setup_method(self):
         session = {"foo": "bar"}
         engine.run(self.test_string, session)
         return engine
 
     def test_parsed_rules(self):
-        engine = self.setup()
+        engine = self.setup_method()
         result = engine.parsed_rule
         assert result[1].name == "print_the_equation"
         assert result[1].args == {"lower_number": 3, "greater_number": 10}
         assert result[1].job_type == "action"
 
     def test_session_content_at_the_end_includes_inital_data(self):
-        engine = self.setup()
+        engine = self.setup_method()
         assert engine.session.get("foo") == "bar"
 
     def test_session_includes_all_operations_results_at_the_end(self):
-        engine = self.setup()
-        assert engine.session.get("results").pop() == {
+        engine = self.setup_method()
+        results = engine.session.get("results")
+        assert results is not None
+        assert results.pop() == {
             "job": "print_the_equation",
             "return": None,
         }
-        assert engine.session.get("results").pop() == {
+        assert results.pop() == {
             "job": "first_condition",
             "return": True,
         }
 
     def test_export_metadata_as_dict(self):
-        engine = self.setup()
-        metadata = engine.export_metadata()
+        engine = self.setup_method()
+        metadata = cast(Dict[str, Any], engine.export_metadata())
         assert "print_the_equation" in metadata.keys()
         assert "first_condition" in metadata.keys()
         assert "second_condition" in metadata.keys()
@@ -86,7 +87,6 @@ class TestFirstEngineCases:
 
 
 class TestEngineRuntimeMetricsCases:
-
     test_string = """
     [
         {
@@ -124,7 +124,7 @@ class TestEngineRuntimeMetricsCases:
 
         # when:
         engine.run(self.test_string, {})
-        metrics_keys = [k for k in engine.runtime_metrics.keys()]
+        metrics_keys = list(engine.runtime_metrics.keys())
 
         # then:
         assert metrics_keys == expected_metrics_keys
