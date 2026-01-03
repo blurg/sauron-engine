@@ -1,6 +1,6 @@
-from sauron.rule_engine import RuleEngine
 from enum import Enum
 
+from sauron.rule_engine import RuleEngine
 
 engine = RuleEngine()
 
