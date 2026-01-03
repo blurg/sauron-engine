@@ -1,4 +1,4 @@
-from typing import Callable, Type
+from typing import Callable, Optional, Type
 
 from .engine import Engine
 from .exporters import DefaultExporter, RuleEngineExporter
@@ -10,34 +10,24 @@ class RuleEngine(Engine):
     exporter_class: Type[DefaultExporter] = RuleEngineExporter
 
     def condition(self, *args, **kwargs):
-        """
-        Decorator so jobs can be called as follows:
-        @obj.condition()
-        def my_function():
-            return None
-        """
-
         def decorator(function: Callable):
-            verbose_name: str = kwargs.get("verbose_name", None)
+            verbose_name: Optional[str] = kwargs.get("verbose_name", None)
             if args:
                 verbose_name = args[0]
+            if verbose_name is None:
+                verbose_name = function.__name__
             self._add_callable(function, verbose_name, job_type="condition")
             return function
 
         return decorator
 
     def action(self, *args, **kwargs):
-        """
-        Decorator so jobs can be called as follows:
-        @obj.action()
-        def my_function():
-            return None
-        """
-
         def decorator(function: Callable):
-            verbose_name: str = kwargs.get("verbose_name", None)
+            verbose_name: Optional[str] = kwargs.get("verbose_name", None)
             if args:
                 verbose_name = args[0]
+            if verbose_name is None:
+                verbose_name = function.__name__
             self._add_callable(function, verbose_name, job_type="action")
             return function
 

@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Any, Dict, cast
 
 from sauron.rule_engine import RuleEngine
 
@@ -73,7 +74,7 @@ def test_can_generate_metadata_json_and_default_value_of_argument_lower_number_i
 
 
 def test_can_handle_enum_types_on_condition():
-    jobs = engine.export_metadata()
+    jobs = cast(Dict[str, Any], engine.export_metadata())
     print(jobs["condition"])
     assert jobs["condition"]["is_red"]["args"]["color"]["choices"] == [
         "red",

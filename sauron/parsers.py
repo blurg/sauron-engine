@@ -74,7 +74,7 @@ class RuleEngineParser(DefaultParser):
         else:
             return self._parse_jobs_from_list(jobs)
 
-    def parse(self, jobs_input: Union[List, str]) -> List[JobModel]:
+    def parse(self, jobs_input: Union[List, str, dict]) -> List[JobModel]:
         """
         Main method called to parse any jobs
         """

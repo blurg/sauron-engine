@@ -21,7 +21,7 @@ mkdocs-material = "^7.1.11"
 zuban = "^0.1.0"
 
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^8.3"
 coverage = "^7.0"
 coveralls = "<4.0"
