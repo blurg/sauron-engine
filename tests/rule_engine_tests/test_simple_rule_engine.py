@@ -27,8 +27,7 @@ def json_rule_can_increment():
 
 
 def test_can_subclass_and_instantiate_rule_engine():
-    class ConcreteRuleProcessor(RuleEngine):
-        ...
+    class ConcreteRuleProcessor(RuleEngine): ...
 
     instance = ConcreteRuleProcessor()
     parents = inspect.getmro(instance.__class__)

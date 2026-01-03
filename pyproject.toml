@@ -12,9 +12,9 @@ packages = [
 
 
 [tool.poetry.dependencies]
-python = "^3.8"
-pydantic = "^1.6.2"
-"ruamel.yaml" = "^0.16.5"
+python = "^3.9"
+pydantic = "^2.10"
+"ruamel.yaml" = "^0.18"
 blinker = "^1.4"
 pylint = "^2.3"
 mkdocs-material = "^7.1.11"
@@ -22,22 +22,21 @@ zuban = "^0.1.0"
 
 
 [tool.poetry.dev-dependencies]
-pytest = "^6.2.5"
-coverage = "^6.0"
+pytest = "^8.3"
+coverage = "^7.0"
 coveralls = "<4.0"
-ruff = "^0.1.0"
-pre-commit = {version = "*",allow-prereleases = true}
-pytest-cov = "^3.0.0"
+ruff = "^0.8"
+pre-commit = {version = "*", allow-prereleases = true}
+pytest-cov = "^5.0"
 ipython = "^7.16"
 pylint = "^2.3"
 rope = "^0.14.0"
 mkdocs = "^1.2.3"
 markdown-include = "^0.5.1"
-pytest-azurepipelines = "^0.8.0"
 
 [tool.ruff]
 line-length = 79
-target-version = "py38"
+target-version = "py39"
 exclude = [
     ".git",
     ".hg",

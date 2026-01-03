@@ -1,13 +1,12 @@
 from typing import Any, Dict, List
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
-# Generic Models
 class JobModel(BaseModel):
     job_type: str = "job"
     name: str
-    args: Dict[str, Any] = None
+    args: Dict[str, Any] = Field(default_factory=dict)
 
 
 # Rule Engine Models

@@ -80,8 +80,7 @@ class TestSignalCases:
             engine = self.setup()
             hook = engine.get_signal(signal_name)
 
-            def hook_call_back(sender, **kwargs):
-                ...
+            def hook_call_back(sender, **kwargs): ...
 
             # when:
             hook.connect(hook_call_back, sender=engine)

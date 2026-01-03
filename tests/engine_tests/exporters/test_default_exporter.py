@@ -31,7 +31,7 @@ def print_the_equation(
 
 
 class TestDefaultExporter:
-    def setup(self):
+    def setup_method(self):
         exporter = DefaultExporter()
         print(engine.callables_collected)
         self.exported_jobs = exporter.export_jobs(engine.callables_collected)

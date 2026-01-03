@@ -93,14 +93,14 @@ class Engine:
             raw_job_list: job_metadata
         else:
             try:
-                raw_job_list: List[
-                    Tuple[str, Dict[str, Any]]
-                ] = job_module.jobs_list
+                raw_job_list: List[Tuple[str, Dict[str, Any]]] = (
+                    job_module.jobs_list
+                )
             except AttributeError:
-                pre_raw_job_list: List[
-                    Tuple[str, Callable]
-                ] = inspect.getmembers(
-                    job_module, predicate=inspect.isfunction
+                pre_raw_job_list: List[Tuple[str, Callable]] = (
+                    inspect.getmembers(
+                        job_module, predicate=inspect.isfunction
+                    )
                 )
                 raw_job_list: List[Tuple[str, Dict[str, Any]]] = [
                     (job[0], {"callable": job[1], "verbose_name": job[0]})

@@ -13,8 +13,6 @@ pool:
   vmImage: 'ubuntu-latest'
 strategy:
   matrix:
-    Python38:
-      python.version: '3.8'
     Python39:
       python.version: '3.9'
     Python310:
@@ -23,6 +21,10 @@ strategy:
       python.version: '3.11'
     Python312:
       python.version: '3.12'
+    Python313:
+      python.version: '3.13'
+    Python314:
+      python.version: '3.14'
 steps:
 - task: UsePythonVersion@0
   inputs:
@@ -39,8 +41,8 @@ steps:
   displayName: 'pytest'
 
 - script: |
-    flake8
-  displayName: 'Linting - flake8'
+    poetry run ruff check
+  displayName: 'Linting - ruff'
 
 - script: |
     pytest --cov

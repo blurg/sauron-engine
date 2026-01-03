@@ -19,7 +19,7 @@ poetry run pytest tests/engine_tests/test_simple_engine.py::TestFirstEngineCases
 # Run with coverage
 poetry run pytest --cov=sauron --cov-report=html
 
-# Run tests using tox (runs on py36 and py37)
+# Run tests using tox (runs on py39 through py314)
 tox
 ```
 
@@ -129,7 +129,7 @@ poetry update
 - `tests/` - Test suite
 
 ### Dependencies
-- Pydantic v1.6+ for data validation
+- Pydantic v2.x for data validation
 - ruamel.yaml for YAML/JSON parsing (supports YAML 1.2)
 - blinker for signals/events
-- Python 3.8+ support
+- Python 3.9+ support
