@@ -18,6 +18,7 @@ nav:
       - Batch Jobs: "batch_jobs.md"
       - Schema Generation: "schema.md"
       - Runtime Metrics: "runtime_metrics.md"
+      - Signals Quickstart: "signals.md"
 
 markdown_extensions:
   - admonition
