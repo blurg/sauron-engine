@@ -16,12 +16,16 @@ nav:
   - Tutorial:
       - Getting Started: "getting_started.md"
       - Schema Generation: "schema.md"
+      - Runtime Metrics: "runtime_metrics.md"
 
 markdown_extensions:
-  - markdown.extensions.codehilite:
-      guess_lang: false
-  - markdown_include.include:
-      base_path: docs
   - admonition
   - codehilite
   - extra
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

@@ -41,6 +41,31 @@ poetry run zuban check
 poetry run pre-commit run --all-files
 ```
 
+### Task Runner (poethepoet)
+```bash
+# Run all tasks using poethepoet (preferred method)
+poetry run poe <task>
+
+# Available tasks:
+# test          - Run all tests
+# test-cov      - Run tests with coverage
+# ruff          - Run ruff linting
+# format        - Run ruff formatting
+# formatcheck   - Check ruff formatting without modifying
+# lint-fix      - Auto-fix linting issues
+# typecheck     - Run zuban type checking
+# lint          - Run all quality checks (ruff, formatcheck, typecheck)
+# pre-commit    - Run all pre-commit hooks
+# docs-build    - Build documentation
+# docs-serve    - Serve documentation with live reload
+# check-all     - Run all checks (lint, format, typecheck, test)
+
+# Examples:
+poetry run poe test
+poetry run poe check-all
+poetry run poe docs-serve
+```
+
 ### Dependency Management
 ```bash
 # Install dependencies
@@ -132,4 +157,5 @@ poetry update
 - Pydantic v2.x for data validation
 - ruamel.yaml for YAML/JSON parsing (supports YAML 1.2)
 - blinker for signals/events
-- Python 3.9+ support
+- poethepoet for task running
+- Python 3.10+ support
