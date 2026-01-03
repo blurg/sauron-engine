@@ -12,7 +12,7 @@ packages = [
 
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.10"
 pydantic = "^2.10"
 "ruamel.yaml" = "^0.18"
 blinker = "^1.4"
@@ -35,10 +35,11 @@ mkdocs = "^1.2.3"
 markdown-include = "^0.5.1"
 fastapi = "^0.109.0"
 uvicorn = {version = "^0.27.0", extras = ["standard"]}
+poethepoet = "^0.39.0"
 
 [tool.ruff]
 line-length = 79
-target-version = "py39"
+target-version = "py310"
 exclude = [
     ".git",
     ".hg",
@@ -54,6 +55,22 @@ exclude = [
 [tool.ruff.lint]
 select = ["E", "F", "W", "B", "C", "I"]
 ignore = ["E203", "E266", "E501"]
+
+[tool.poe.tasks]
+test = "poetry run pytest"
+test-cov = "poetry run pytest --cov=sauron --cov-report=html"
+ruff = "poetry run ruff check sauron/ tests/"
+format = "poetry run ruff format sauron/ tests/"
+formatcheck = "poetry run ruff format --check sauron/ tests/"
+lint-fix = "poetry run ruff check --fix sauron/ tests/"
+typecheck = "poetry run zuban check"
+pre-commit = "poetry run pre-commit run --all-files"
+docs-build = "poetry run mkdocs build"
+docs-serve = "poetry run mkdocs serve"
+check-all = ["lint", "format", "typecheck", "test"]
+
+[tool.poe.tasks.lint]
+sequence = ["ruff", "formatcheck", "typecheck"]
 
 [build-system]
 requires = ["poetry>=0.12"]

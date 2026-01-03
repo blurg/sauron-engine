@@ -253,3 +253,27 @@ For each `engine.run` execution, you can access the runtime metrics, per job and
 
 - We need all the help we can get. Please read [CONTRIBUTE.md](CONTRIBUTING.md) for instructions
 
+## Development
+
+We use [poethepoet](https://github.com/nat-n/poethepoet) as our task runner for development:
+
+```bash
+# Install dependencies
+poetry install
+
+# Run tests
+poetry run poe test
+
+# Run all quality checks
+poetry run poe check-all
+
+# Build documentation
+poetry run poe docs-build
+
+# Serve documentation with live reload
+poetry run poe docs-serve
+
+# View all available tasks
+poetry run poe --help
+```
+
