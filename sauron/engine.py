@@ -204,7 +204,7 @@ class Engine:
         tick_start = time.time()
         for job in self.parse(rule):
             session, result = self.apply_job_call(job, session)
-            if not result:
+            if job.job_type == "condition" and not result:
                 break
         tick_end = time.time()
 

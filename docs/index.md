@@ -15,6 +15,13 @@ Sauron aims to be a simple way to run functions in user-configurable order. Appl
 - Simple to use
 - Shared context through jobs
 - Extensible
+- FastAPI integration example
+
+## Example Application
+
+A complete FastAPI service demonstrating real-world usage with external rules and multi-file job modules:
+
+→ [examples/sample_app/README.md](../examples/sample_app/README.md)
 
 ## Inspiration
 
