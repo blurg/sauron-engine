@@ -15,6 +15,7 @@ nav:
   - Sauron: "index.md"
   - Tutorial:
       - Getting Started: "getting_started.md"
+      - Batch Jobs: "batch_jobs.md"
       - Schema Generation: "schema.md"
       - Runtime Metrics: "runtime_metrics.md"
 
