@@ -19,8 +19,13 @@ nav:
       - Runtime Metrics: "runtime_metrics.md"
 
 markdown_extensions:
-  - markdown.extensions.codehilite:
-      guess_lang: false
   - admonition
   - codehilite
   - extra
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

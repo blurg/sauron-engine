@@ -13,7 +13,7 @@ The `engine.runtime_metrics` dictionary contains:
 
 Here's a complete example showing how to use runtime metrics:
 
-```python
+```py
 
 from sauron.rule_engine import RuleEngine
 
