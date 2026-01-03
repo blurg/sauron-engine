@@ -1,20 +1,19 @@
-from collections import OrderedDict
-from typing import List, Dict, Callable, Union, Any, Type
-from .models import JobModel
-from enum import Enum
 import inspect
 import json as json_lib
+from enum import Enum
+from typing import Any, Callable, Dict, Type, Union
+
 from ruamel.yaml import YAML
 from ruamel.yaml.compat import StringIO
 
 
 class MyYAML(YAML):
     """
-        ruamel.yaml lib was chosen as it supports yaml1.2, this gives us json parsing
-        together with yaml parsing
-        Allows to dump yaml to a string. This can/should be reviewed as this is less
-        performatic than writing to a file or stdout according to docs
-        https://yaml.readthedocs.io/en/latest/example.html#output-of-dump-as-a-string
+    ruamel.yaml lib was chosen as it supports yaml1.2, this gives us json parsing
+    together with yaml parsing
+    Allows to dump yaml to a string. This can/should be reviewed as this is less
+    performatic than writing to a file or stdout according to docs
+    https://yaml.readthedocs.io/en/latest/example.html#output-of-dump-as-a-string
     """
 
     def dump(self, data, stream=None, **kw):
@@ -45,7 +44,7 @@ class DefaultExporter:
         name = annotation.__name__
         choices = None
         if Enum in annotation.__mro__:
-            choices = [choice for choice in annotation.__members__]
+            choices = list(annotation.__members__)
         defaults = param.default
         if defaults is param.empty:
             defaults = None
@@ -56,7 +55,7 @@ class DefaultExporter:
         cls, input_function: Callable
     ) -> Dict[str, Any]:
         """
-            Metadata about arguments documentation and the function itself
+        Metadata about arguments documentation and the function itself
         """
         signature: inspect.Signature = inspect.signature(input_function)
         arguments_metadata: Dict[str, Dict[str, Any]] = {}

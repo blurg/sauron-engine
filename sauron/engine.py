@@ -1,19 +1,18 @@
+import inspect
 import time
 from collections import OrderedDict
 from types import ModuleType
-from typing import List, Dict, Callable, Union, Any, Type, Tuple
+from typing import Any, Callable, Dict, List, Tuple, Type, Union
 
 from blinker import signal
 from blinker.base import NamedSignal
 
+from .exporters import DefaultExporter
 from .models import JobModel
 from .parsers import DefaultParser
-from .exporters import DefaultExporter
-import inspect
 
 
 class Engine:
-
     job_model_class: Type[JobModel] = JobModel
     parser_class: Type[DefaultParser] = DefaultParser
     exporter_class: Type[DefaultExporter] = DefaultExporter
@@ -47,7 +46,9 @@ class Engine:
 
         if exporter_class:
             self.exporter_class = exporter_class
-        self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = OrderedDict()
+        self.callables_collected: "OrderedDict[str, Dict[str, Any]]" = (
+            OrderedDict()
+        )
 
         self.runtime_metrics["jobs"] = {}
         self.runtime_metrics["total_runtime"] = 0
@@ -156,7 +157,7 @@ class Engine:
 
     def parse(self, unparsed_rule: Union[str, Dict[str, Any]]):
         """
-            Parses rules
+        Parses rules
         """
         parser: DefaultParser = self.parser_class()
         parsed_rule: List[JobModel] = parser.parse(unparsed_rule)

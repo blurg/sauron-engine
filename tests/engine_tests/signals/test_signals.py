@@ -1,7 +1,6 @@
-import pytest
-from sauron.engine import Engine
-from pprint import pprint
 from blinker.base import NamedSignal
+
+from sauron.engine import Engine
 
 engine = Engine()
 

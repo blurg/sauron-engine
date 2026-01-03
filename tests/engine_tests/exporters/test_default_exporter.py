@@ -1,6 +1,5 @@
-from sauron.exporters import DefaultExporter
-import pytest
 from sauron.engine import Engine
+from sauron.exporters import DefaultExporter
 
 engine = Engine()
 
@@ -44,19 +43,19 @@ class TestDefaultExporter:
         )
 
     def test_can_export_simple_engine(self):
-        assert type(self.exported_jobs) is dict
+        assert isinstance(self.exported_jobs, dict)
 
     def test_can_export_simple_engine_as_json(self):
-        assert type(self.exported_jobs_as_json) is str
+        assert isinstance(self.exported_jobs_as_json, str)
 
     def test_can_export_simple_engine_as_yaml(self):
-        assert type(self.exported_jobs_as_yaml) is str
+        assert isinstance(self.exported_jobs_as_yaml, str)
 
     def test_exported_data_has_three_jobs(self):
         assert len(self.exported_jobs) == 3
 
     def test_exported_data_has_job_names_accurate(self):
-        assert [name for name in self.exported_jobs.keys()] == [
+        assert list(self.exported_jobs.keys()) == [
             "first_condition",
             "second_condition",
             "print_the_equation",

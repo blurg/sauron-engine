@@ -1,5 +1,5 @@
-from typing import Union
 from decimal import Decimal
+from typing import Union
 
 
 def always_true(context):

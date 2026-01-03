@@ -69,7 +69,7 @@ def obvious_action(lower_number: int = 10, greater_number: int = 20) -> None:
 
 def test_can_generate_metadata_json_and_default_value_of_argument_lower_number_is_right_for_action():
     metadata = engine.export_metadata(fmt="json")
-    assert type(metadata) == str
+    assert isinstance(metadata, str)
 
 
 def test_can_handle_enum_types_on_condition():

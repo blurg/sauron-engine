@@ -18,20 +18,16 @@ pydantic = "^1.6.2"
 blinker = "^1.4"
 pylint = "^2.3"
 mkdocs-material = "^7.1.11"
-mypy = "^1.9.0"
-flake8 = "^5.0.0"
+zuban = "^0.1.0"
 
 
 [tool.poetry.dev-dependencies]
-isort = "*"
 pytest = "^6.2.5"
 coverage = "^6.0"
 coveralls = "<4.0"
-flake8 = "^5.0.0"
-black = {version = "*",allow-prereleases = true}
+ruff = "^0.1.0"
 pre-commit = {version = "*",allow-prereleases = true}
 pytest-cov = "^3.0.0"
-mypy = "^1.9.0"
 ipython = "^7.16"
 pylint = "^2.3"
 rope = "^0.14.0"
@@ -39,22 +35,24 @@ mkdocs = "^1.2.3"
 markdown-include = "^0.5.1"
 pytest-azurepipelines = "^0.8.0"
 
-[tool.black]
+[tool.ruff]
 line-length = 79
-include = '\.pyi?$'
-exclude = '''
-/(
-    \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-)/
-'''
+target-version = "py38"
+exclude = [
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".tox",
+    ".venv",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "C", "I"]
+ignore = ["E203", "E266", "E501"]
 
 [build-system]
 requires = ["poetry>=0.12"]

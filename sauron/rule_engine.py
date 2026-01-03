@@ -1,11 +1,11 @@
-from .engine import Engine
 from typing import Callable, Type
-from .parsers import DefaultParser, RuleEngineParser
+
+from .engine import Engine
 from .exporters import DefaultExporter, RuleEngineExporter
+from .parsers import DefaultParser, RuleEngineParser
 
 
 class RuleEngine(Engine):
-
     parser_class: Type[DefaultParser] = RuleEngineParser
     exporter_class: Type[DefaultExporter] = RuleEngineExporter
 

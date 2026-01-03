@@ -1,7 +1,4 @@
-from typing import List
-import pytest
 from sauron.engine import Engine
-from pprint import pprint
 from tests.utils import job_import_module, job_import_module_verbose
 
 engine = Engine()
@@ -12,7 +9,7 @@ class TestFirstEngineCases:
         engine.import_jobs(job_import_module)
         jobs = engine.callables_collected
         assert len(jobs) == 2
-        assert [job for job in jobs.keys()] == ["always_true", "times_two"]
+        assert list(jobs.keys()) == ["always_true", "times_two"]
 
     def test_can_parse_jobs_with_verbose_names(self):
         engine.import_jobs(job_import_module_verbose)

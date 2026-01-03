@@ -1,6 +1,4 @@
-import pytest
 from sauron.engine import Engine
-from pprint import pprint
 
 engine = Engine()
 
@@ -32,7 +30,6 @@ def print_the_equation(
 
 
 class TestFirstEngineCases:
-
     test_string = """
     [
         {
@@ -86,7 +83,6 @@ class TestFirstEngineCases:
 
 
 class TestEngineRuntimeMetricsCases:
-
     test_string = """
     [
         {
@@ -124,7 +120,7 @@ class TestEngineRuntimeMetricsCases:
 
         # when:
         engine.run(self.test_string, {})
-        metrics_keys = [k for k in engine.runtime_metrics.keys()]
+        metrics_keys = list(engine.runtime_metrics.keys())
 
         # then:
         assert metrics_keys == expected_metrics_keys
