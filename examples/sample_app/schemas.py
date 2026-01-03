@@ -1,3 +1,4 @@
+from decimal import Decimal
 from enum import Enum
 from typing import List
 
@@ -13,14 +14,14 @@ class OrderStatus(str, Enum):
 class OrderItem(BaseModel):
     product_id: str
     quantity: int
-    unit_price: float
+    unit_price: Decimal
 
 
 class Order(BaseModel):
     order_id: str
     customer_id: str
     items: List[OrderItem]
-    total_amount: float
+    total_amount: Decimal
     payment_method: str
     priority: str = "normal"
 
@@ -28,8 +29,8 @@ class Order(BaseModel):
 class OrderResponse(BaseModel):
     order_id: str
     status: OrderStatus
-    processed_amount: float
-    applied_discount: float
-    shipping_cost: float
-    final_amount: float
+    processed_amount: Decimal
+    applied_discount: Decimal
+    shipping_cost: Decimal
+    final_amount: Decimal
     results: List[dict]

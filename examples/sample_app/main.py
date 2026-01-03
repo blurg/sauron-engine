@@ -1,3 +1,4 @@
+from decimal import Decimal
 from pathlib import Path
 from typing import Any, Dict, Union
 
@@ -20,8 +21,8 @@ def process_order(order: Order) -> OrderResponse:
     session: Dict[str, Any] = {
         "order": order.model_dump(),
         "results": [],
-        "discount": 0.0,
-        "shipping": 0.0,
+        "discount": Decimal("0.0"),
+        "shipping": Decimal("0.0"),
         "final_amount": order.total_amount,
         "approved": False,
     }
@@ -33,8 +34,8 @@ def process_order(order: Order) -> OrderResponse:
             order_id=order.order_id,
             status=OrderStatus.REJECTED,
             processed_amount=order.total_amount,
-            applied_discount=session.get("discount", 0.0),
-            shipping_cost=session.get("shipping", 0.0),
+            applied_discount=session.get("discount", Decimal("0.0")),
+            shipping_cost=session.get("shipping", Decimal("0.0")),
             final_amount=order.total_amount,
             results=session.get("results", []),
         )
@@ -43,8 +44,8 @@ def process_order(order: Order) -> OrderResponse:
         order_id=order.order_id,
         status=OrderStatus.APPROVED,
         processed_amount=order.total_amount,
-        applied_discount=session.get("discount", 0.0),
-        shipping_cost=session.get("shipping", 0.0),
+        applied_discount=session.get("discount", Decimal("0.0")),
+        shipping_cost=session.get("shipping", Decimal("0.0")),
         final_amount=session.get("final_amount", order.total_amount),
         results=session.get("results", []),
     )
