@@ -77,3 +77,9 @@ def is_red(session, color: Color) -> bool:
     return color == color.red
 
 ```
+
+## Complete Example: Order Processing Service
+
+A full FastAPI application with external rules and job modules:
+
+→ [examples/sample_app/README.md](../examples/sample_app/README.md)

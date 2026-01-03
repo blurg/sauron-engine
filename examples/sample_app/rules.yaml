@@ -1,0 +1,13 @@
+conditions:
+  - name: has_items
+  - name: amount_sufficient
+    args:
+      min_amount: 10.0
+  - name: priority_valid
+actions:
+  - name: calculate_discount
+    args:
+      threshold: 100.0
+      rate: 0.1
+  - name: calculate_shipping
+  - name: finalize_order
