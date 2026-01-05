@@ -28,7 +28,7 @@ coveralls = "<4.0"
 ruff = "^0.8"
 pre-commit = {version = "*", allow-prereleases = true}
 pytest-cov = "^5.0"
-ipython = "^7.16"
+ipython = ">=7.16,<9.0"
 pylint = "^2.3"
 rope = "^0.14.0"
 mkdocs = "^1.2.3"
